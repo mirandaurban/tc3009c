@@ -1,0 +1,15 @@
+{
+  "mae": 24175.98,
+  "rmse": 30249.04,
+  "r2": 0.8961,
+  "features": [
+    "marca",
+    "modelo",
+    "transmision",
+    "anio",
+    "km"
+  ],
+  "target": "precio",
+  "model_type": "LinearRegression",
+  "model_version": "v1"
+}

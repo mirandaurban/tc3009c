@@ -1,0 +1,6 @@
+mkdir -p data training models app frontend
+touch training/train.py
+touch app/main.py
+touch app/schemas.py
+touch requirements.txt
+touch README.md

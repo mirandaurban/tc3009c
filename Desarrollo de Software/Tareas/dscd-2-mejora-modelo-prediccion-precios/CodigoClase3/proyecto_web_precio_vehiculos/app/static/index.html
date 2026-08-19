@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Valuador de Autos Usados</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section class="hero card">
+        <div class="eyebrow">Caso de uso: valuacion de vehiculos usados</div>
+        <h1>Valuador de Autos</h1>
+        <p>
+          La web captura los datos de un vehiculo, llama una API FastAPI y esa API consulta la inferencia de un
+          modelo de Regresion Lineal para estimar el precio de venta.
+        </p>
+        <div class="hero-grid">
+          <div class="hero-panel">
+            <h2>Idea de uso</h2>
+            <p>
+              Un asesor de ventas captura marca, modelo, anio, kilometraje y transmision. La app devuelve un precio
+              estimado y guarda cada consulta en SQLite para dar seguimiento.
+            </p>
+          </div>
+          <div class="hero-panel">
+            <h2>Flujo tecnico</h2>
+            <p>
+              Frontend HTML/JS → <code>POST /predict-price</code> → API FastAPI → pipeline (preprocessing + Regresion
+              Lineal) serializado con joblib → respuesta JSON → historial en <code>GET /api/price-predictions</code>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <section class="card">
+          <h2>Consultar el modelo</h2>
+          <p>Ingresa los datos del vehiculo para obtener un precio estimado al instante.</p>
+
+          <form id="predict-form">
+            <label>
+              Marca
+              <select name="marca" required>
+                <option value="Nissan">Nissan</option>
+                <option value="Mazda">Mazda</option>
+                <option value="Volkswagen">Volkswagen</option>
+                <option value="Toyota">Toyota</option>
+                <option value="Chevrolet">Chevrolet</option>
+              </select>
+            </label>
+            <label>Modelo <input type="text" name="modelo" value="Sentra" required /></label>
+            <label>Anio <input type="number" name="anio" min="2000" max="2026" value="2021" required /></label>
+            <label>Kilometraje <input type="number" name="km" min="0" max="400000" value="45000" required /></label>
+            <label>
+              Transmision
+              <select name="transmision" required>
+                <option value="Automatica">Automatica</option>
+                <option value="Manual">Manual</option>
+              </select>
+            </label>
+            <button type="submit">Estimar precio</button>
+          </form>
+
+          <div id="result" class="result hidden"></div>
+        </section>
+
+        <aside class="card side-card">
+          <h2>Como consumir la API</h2>
+          <p>La UI manda JSON a la API. El backend responde con el precio estimado y la version del modelo.</p>
+          <pre><code>POST /predict-price
+{
+  "marca": "Nissan",
+  "modelo": "Sentra",
+  "anio": 2021,
+  "km": 45000,
+  "transmision": "Automatica"
+}</code></pre>
+          <p class="mini-note">
+            Respuesta: <code>estimated_price</code>, <code>currency</code> y <code>model_version</code>.
+          </p>
+        </aside>
+      </section>
+
+      <section class="card history-card">
+        <div class="section-header">
+          <h2>Historial reciente</h2>
+          <button id="refresh-history" type="button" class="secondary-button">Actualizar</button>
+        </div>
+        <p>Ultimas valuaciones guardadas en SQLite por la API.</p>
+        <div class="kpi-grid">
+          <div class="kpi">
+            <span class="kpi-label">Valuaciones mostradas</span>
+            <strong id="kpi-count">0</strong>
+          </div>
+          <div class="kpi">
+            <span class="kpi-label">Precio promedio</span>
+            <strong id="kpi-average">$0.00</strong>
+          </div>
+          <div class="kpi">
+            <span class="kpi-label">Precio maximo</span>
+            <strong id="kpi-max">$0.00</strong>
+          </div>
+        </div>
+        <div id="price-chart" class="metric-chart hidden" aria-label="Grafica de precios recientes"></div>
+        <div id="history-empty" class="empty-state">Aun no hay valuaciones registradas.</div>
+        <div class="table-wrap">
+          <table id="history-table" class="history-table hidden">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Anio</th>
+                <th>Km</th>
+                <th>Transmision</th>
+                <th>Precio estimado</th>
+                <th>Version</th>
+              </tr>
+            </thead>
+            <tbody id="history-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

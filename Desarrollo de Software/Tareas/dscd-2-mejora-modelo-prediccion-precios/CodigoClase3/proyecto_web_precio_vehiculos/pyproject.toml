@@ -1,0 +1,5 @@
+[project]
+name = "proyecto-web-precio-vehiculos"
+version = "0.1.0"
+description = "Clase 3: servicio de inferencia para precio de vehiculos usados (Regresion Lineal)"
+requires-python = ">=3.11,<3.14"
