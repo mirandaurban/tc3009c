@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estimador de propensión · Depósito a plazo</title>
+    <style>
+      :root {
+        --ink: #14213d;
+        --ink-soft: #4a5568;
+        --line: #d9dee6;
+        --bg: #f6f7f9;
+        --panel: #ffffff;
+        --accent: #1f5eff;
+        --accent-soft: #e8edff;
+        --good: #1a7f4e;
+        --good-bg: #e5f5ec;
+        --warn: #8a5300;
+        --warn-bg: #fbeddb;
+        --radius: 10px;
+        font-family:
+          "Segoe UI",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        padding: 40px 16px;
+      }
+
+      main {
+        width: 100%;
+        max-width: 480px;
+      }
+
+      header {
+        margin-bottom: 24px;
+      }
+
+      .eyebrow {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+
+      h1 {
+        font-size: 22px;
+        margin: 0 0 6px 0;
+      }
+
+      p.sub {
+        margin: 0;
+        color: var(--ink-soft);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      form {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px;
+        margin-top: 20px;
+      }
+
+      .field {
+        margin-bottom: 14px;
+      }
+
+      .field:last-of-type {
+        margin-bottom: 0;
+      }
+
+      label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 4px;
+        color: var(--ink);
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 9px 10px;
+        border-radius: 6px;
+        border: 1px solid var(--line);
+        font-size: 14px;
+        background: #fff;
+        color: var(--ink);
+      }
+
+      input:focus,
+      select:focus {
+        outline: 2px solid var(--accent);
+        outline-offset: 1px;
+        border-color: var(--accent);
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      button {
+        width: 100%;
+        margin-top: 18px;
+        padding: 11px;
+        border: none;
+        border-radius: 6px;
+        background: var(--accent);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #1a4fd6;
+      }
+      button:disabled {
+        background: #9db3e8;
+        cursor: not-allowed;
+      }
+
+      #resultado {
+        margin-top: 18px;
+        border-radius: var(--radius);
+        padding: 16px 18px;
+        display: none;
+      }
+
+      #resultado.show {
+        display: block;
+      }
+
+      #resultado.yes {
+        background: var(--good-bg);
+        border: 1px solid #b6e2c8;
+        color: var(--good);
+      }
+
+      #resultado.no {
+        background: var(--warn-bg);
+        border: 1px solid #f0dcb0;
+        color: var(--warn);
+      }
+
+      #resultado .label {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-weight: 700;
+        opacity: 0.8;
+      }
+
+      #resultado .prob {
+        font-size: 28px;
+        font-weight: 700;
+        margin: 2px 0 4px 0;
+      }
+
+      #resultado .clasif {
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      #resultado .disclaimer {
+        margin-top: 8px;
+        font-size: 12px;
+        opacity: 0.75;
+        line-height: 1.4;
+      }
+
+      #error {
+        display: none;
+        margin-top: 18px;
+        padding: 12px 14px;
+        border-radius: var(--radius);
+        background: #fdeaea;
+        border: 1px solid #f3c2c2;
+        color: #a12626;
+        font-size: 13px;
+      }
+
+      #error.show {
+        display: block;
+      }
+
+      .api-note {
+        margin-top: 16px;
+        font-size: 12px;
+        color: var(--ink-soft);
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="eyebrow">Herramienta interna · Asesor comercial</div>
+        <h1>Estimador de propensión a depósito a plazo</h1>
+        <p class="sub">
+          Captura los datos del cliente y obtén una probabilidad estimada,
+          calculada por el modelo de Regresión Logística.
+        </p>
+      </header>
+
+      <form id="form-cliente">
+        <div class="row">
+          <div class="field">
+            <label for="age">Edad</label>
+            <input
+              type="number"
+              id="age"
+              min="18"
+              max="100"
+              value="41"
+              required
+            />
+          </div>
+          <div class="field">
+            <label for="balance">Balance anual</label>
+            <input type="number" id="balance" value="3200" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="job">Ocupación</label>
+          <select id="job" required>
+            <option value="admin.">Administrativo</option>
+            <option value="blue-collar">Obrero</option>
+            <option value="entrepreneur">Empresario</option>
+            <option value="housemaid">Empleada doméstica</option>
+            <option value="management">Gerencia</option>
+            <option value="retired">Jubilado</option>
+            <option value="self-employed">Independiente</option>
+            <option value="services">Servicios</option>
+            <option value="student">Estudiante</option>
+            <option value="technician" selected>Técnico</option>
+            <option value="unemployed">Desempleado</option>
+            <option value="unknown">Desconocido</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="marital">Estado civil</label>
+            <select id="marital" required>
+              <option value="single">Soltero/a</option>
+              <option value="married" selected>Casado/a</option>
+              <option value="divorced">Divorciado/a</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="education">Educación</label>
+            <select id="education" required>
+              <option value="primary">Primaria</option>
+              <option value="secondary" selected>Secundaria</option>
+              <option value="tertiary">Superior</option>
+              <option value="unknown">Desconocido</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="housing">Crédito hipotecario</label>
+            <select id="housing" required>
+              <option value="yes" selected>Sí</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="loan">Préstamo personal</label>
+            <select id="loan" required>
+              <option value="no" selected>No</option>
+              <option value="yes">Sí</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="campaign">Contactos durante la campaña</label>
+          <input
+            type="number"
+            id="campaign"
+            min="1"
+            max="100"
+            value="2"
+            required
+          />
+        </div>
+
+        <button type="submit" id="btn-submit">Estimar propensión</button>
+      </form>
+
+      <div id="resultado">
+        <div class="label">Resultado del modelo</div>
+        <div class="prob" id="res-prob">—</div>
+        <div class="clasif" id="res-clasif">—</div>
+        <div class="disclaimer">
+          Esta probabilidad es la salida de un modelo estadístico entrenado con
+          datos históricos. No es una certeza sobre el comportamiento futuro de
+          este cliente en particular.
+        </div>
+      </div>
+
+      <div id="error"></div>
+
+      <p class="api-note">
+        Consumiendo <code>POST /predict</code> en <code id="api-url"></code>
+      </p>
+    </main>
+
+    <script>
+      // URL de la API. Si despliegas la API en otra dirección, cambia esta
+      // constante (o conviértela en variable de entorno si usas un bundler).
+      const API_URL = "http://127.0.0.1:8000/predict";
+      document.getElementById("api-url").textContent = API_URL;
+
+      const form = document.getElementById("form-cliente");
+      const btn = document.getElementById("btn-submit");
+      const resultadoBox = document.getElementById("resultado");
+      const errorBox = document.getElementById("error");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        resultadoBox.classList.remove("show", "yes", "no");
+        errorBox.classList.remove("show");
+        btn.disabled = true;
+        btn.textContent = "Calculando...";
+
+        const payload = {
+          age: Number(document.getElementById("age").value),
+          job: document.getElementById("job").value,
+          marital: document.getElementById("marital").value,
+          education: document.getElementById("education").value,
+          balance: Number(document.getElementById("balance").value),
+          housing: document.getElementById("housing").value,
+          loan: document.getElementById("loan").value,
+          campaign: Number(document.getElementById("campaign").value),
+        };
+
+        try {
+          const resp = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          const data = await resp.json();
+
+          if (!resp.ok) {
+            const detalle = Array.isArray(data.detail)
+              ? data.detail.map((d) => `${d.loc?.at(-1)}: ${d.msg}`).join(" · ")
+              : data.detail || "Ocurrió un error al procesar la solicitud.";
+            throw new Error(detalle);
+          }
+
+          const pct = (data.probability * 100).toFixed(1);
+          document.getElementById("res-prob").textContent =
+            `Probabilidad estimada: ${pct}%`;
+          document.getElementById("res-clasif").textContent =
+            `Predicción: ${data.classification} (${data.prediction})`;
+
+          resultadoBox.classList.add(
+            "show",
+            data.prediction === "yes" ? "yes" : "no",
+          );
+        } catch (err) {
+          errorBox.textContent = `No se pudo obtener la estimación: ${err.message}`;
+          errorBox.classList.add("show");
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "Estimar propensión";
+        }
+      });
+    </script>
+  </body>
+</html>
+
+<!--
+Herramienta: Claude
+• Uso realizado: Se utilizó para generar la interfaz del frontend a partir de las
+  especificaciones proporcionadas, pensadas con base en los constraints dados en 
+  las indicaciones de la tarea. Se indicó que la interfaz debía consistir únicamente 
+  en un formulario y que solo aceptara los valores definidos y mostrados en el frontend.
+• Secciones donde se utilizó: Este archivo para la estructura, diseño y elementos
+  del formulario del frontend.
+• Validación realizada por el estudiante: Se revisó que la interfaz cumpliera
+  con los campos, valores y restricciones especificados y que los datos fueran
+  compatibles con los parámetros aceptados por la API.
+Confirmo que revisé, verifiqué y asumo la responsabilidad del contenido final entregado.
+-->

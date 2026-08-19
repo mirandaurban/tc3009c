@@ -1,0 +1,17 @@
+{
+  "accuracy": 0.611,
+  "precision": 0.1612,
+  "recall": 0.5673,
+  "f1-score": 0.2511,
+  "features": [
+    "age",
+    "balance",
+    "campaign",
+    "housing",
+    "loan",
+    "job",
+    "marital",
+    "education"
+  ],
+  "model_type": "LogisticRegression"
+}
