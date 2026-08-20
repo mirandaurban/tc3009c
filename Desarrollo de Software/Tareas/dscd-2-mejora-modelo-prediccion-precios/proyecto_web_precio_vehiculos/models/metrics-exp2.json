@@ -1,0 +1,22 @@
+{
+  "mae": 69073.66,
+  "rmse": 131340.41,
+  "r2": 0.9752,
+  "features": [
+    "name",
+    "fuel",
+    "seats",
+    "seller_type",
+    "transmission",
+    "owner",
+    "year",
+    "km_driven",
+    "mileage",
+    "engine",
+    "max_power",
+    "torque"
+  ],
+  "target": "selling_price",
+  "model_type": "DecisionTreeRegressor",
+  "model_version": "v1"
+}

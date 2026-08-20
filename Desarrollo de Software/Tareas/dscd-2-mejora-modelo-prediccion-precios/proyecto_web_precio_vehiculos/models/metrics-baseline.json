@@ -1,0 +1,22 @@
+{
+  "mae": 273709.59,
+  "rmse": 451950.32,
+  "r2": 0.7062,
+  "features": [
+    "name",
+    "fuel",
+    "seats",
+    "seller_type",
+    "transmission",
+    "owner",
+    "year",
+    "km_driven",
+    "mileage",
+    "engine",
+    "max_power",
+    "torque"
+  ],
+  "target": "selling_price",
+  "model_type": "LinearRegression",
+  "model_version": "v1"
+}

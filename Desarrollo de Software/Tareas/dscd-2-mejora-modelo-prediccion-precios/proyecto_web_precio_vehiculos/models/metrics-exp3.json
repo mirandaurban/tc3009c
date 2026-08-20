@@ -1,0 +1,22 @@
+{
+  "mae": 56438.57,
+  "rmse": 106012.2,
+  "r2": 0.9838,
+  "features": [
+    "name",
+    "fuel",
+    "seats",
+    "seller_type",
+    "transmission",
+    "owner",
+    "year",
+    "km_driven",
+    "mileage",
+    "engine",
+    "max_power",
+    "torque"
+  ],
+  "target": "selling_price",
+  "model_type": "ExtraTreesRegressor",
+  "model_version": "v1"
+}

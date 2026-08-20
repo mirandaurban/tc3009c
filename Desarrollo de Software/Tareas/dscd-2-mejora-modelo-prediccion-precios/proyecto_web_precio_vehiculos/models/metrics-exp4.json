@@ -1,0 +1,48 @@
+{
+  "mae": 276726.68,
+  "rmse": 459791.18,
+  "r2": 0.6959,
+  "features": [
+    "name",
+    "fuel",
+    "seats",
+    "seller_type",
+    "transmission",
+    "owner",
+    "year",
+    "km_driven",
+    "mileage",
+    "engine",
+    "max_power",
+    "torque"
+  ],
+  "target": "selling_price",
+  "model_type": "LinearRegression",
+  "model_version": "v1",
+  "feature_selection": {
+    "method": "SelectKBest (f_regression)",
+    "k": 20,
+    "selected_features": [
+      "categorical__name_Audi A6 35 TFSI Matrix",
+      "categorical__name_BMW X4 M Sport X xDrive20d",
+      "categorical__name_Jaguar XE 2016-2019 2.0L Diesel Prestige",
+      "categorical__name_Jaguar XF 2.0 Diesel Portfolio",
+      "categorical__name_Lexus ES 300h",
+      "categorical__name_Volvo XC40 D4 Inscription BSIV",
+      "categorical__name_Volvo XC90 T8 Excellence BSIV",
+      "categorical__fuel_Diesel",
+      "categorical__fuel_Petrol",
+      "categorical__seller_type_Dealer",
+      "categorical__seller_type_Individual",
+      "categorical__transmission_Automatic",
+      "categorical__transmission_Manual",
+      "categorical__owner_First Owner",
+      "categorical__owner_Second Owner",
+      "remainder__year",
+      "remainder__km_driven",
+      "remainder__engine",
+      "remainder__max_power",
+      "remainder__torque"
+    ]
+  }
+}
