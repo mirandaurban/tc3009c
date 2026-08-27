@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Portal ETL — Clase 5</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --card-bg: #171a21;
+    --border: #2a2e38;
+    --text: #e6e8ee;
+    --muted: #9aa2b1;
+    --etl: #4f8cff;
+    --elt: #ff9f4f;
+    --pending: #2a2e38;
+    --active: #ffcc00;
+    --done: #35c46f;
+    --error: #ff5c5c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 24px;
+  }
+  h1 { margin: 0 0 4px; font-size: 22px; }
+  p.subtitle { margin: 0 0 24px; color: var(--muted); }
+  #cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 18px;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .card-header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .card-header h2 { font-size: 16px; margin: 0; }
+  .badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .badge.etl { background: var(--etl); color: #fff; }
+  .badge.elt { background: var(--elt); color: #1a1200; }
+  .tech { margin: 0; font-size: 12px; color: var(--muted); font-family: monospace; }
+  .desc { margin: 0; font-size: 13px; color: var(--text); opacity: 0.9; }
+  .pipeline { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin: 6px 0; }
+  .stage {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 5px 7px;
+    border-radius: 6px;
+    background: var(--pending);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .stage.active { background: var(--active); color: #1a1200; border-color: var(--active); animation: pulse 1s infinite; }
+  .stage.done { background: var(--done); color: #06210f; border-color: var(--done); }
+  .arrow { color: var(--muted); font-size: 12px; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+  .run-btn {
+    align-self: flex-start;
+    background: var(--etl);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .run-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  .run-btn.error { background: var(--error); }
+  .log {
+    background: #0a0b0e;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 11px;
+    line-height: 1.4;
+    max-height: 220px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin: 0;
+    color: #b7f7c9;
+  }
+</style>
+</head>
+<body>
+  <h1>Portal ETL — Clase 5</h1>
+  <p class="subtitle">
+    Corre los 3 ejemplos de la clase y observa, en vivo, que etapa del
+    pipeline se esta ejecutando en cada uno.
+  </p>
+  <div id="cards"></div>
+
+<script>
+async function loadExamples() {
+  const res = await fetch('/api/examples');
+  const examples = await res.json();
+  const container = document.getElementById('cards');
+  container.innerHTML = '';
+
+  Object.entries(examples).forEach(([id, ex]) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    const stageBoxes = ex.stages
+      .map((s) => `<div class="stage" data-stage="${s}">${s}</div>`)
+      .join('<span class="arrow">&rarr;</span>');
+
+    card.innerHTML = `
+      <div class="card-header">
+        <h2>${ex.title}</h2>
+        <span class="badge ${ex.pattern.toLowerCase()}">${ex.pattern}</span>
+      </div>
+      <p class="tech">${ex.tech}</p>
+      <p class="desc">${ex.description}</p>
+      <div class="pipeline" id="pipeline-${id}">${stageBoxes}</div>
+      <button class="run-btn" data-id="${id}">Ejecutar</button>
+      <pre class="log" id="log-${id}"></pre>
+    `;
+    container.appendChild(card);
+  });
+
+  document.querySelectorAll('.run-btn').forEach((btn) => {
+    btn.addEventListener('click', () => runExample(btn.dataset.id));
+  });
+}
+
+function runExample(id) {
+  const btn = document.querySelector(`.run-btn[data-id="${id}"]`);
+  const log = document.getElementById(`log-${id}`);
+  const pipeline = document.getElementById(`pipeline-${id}`);
+  const stages = Array.from(pipeline.querySelectorAll('.stage'));
+
+  stages.forEach((s) => s.classList.remove('active', 'done'));
+  log.textContent = '';
+  btn.disabled = true;
+  btn.classList.remove('error');
+  btn.textContent = 'Ejecutando…';
+
+  const source = new EventSource(`/run/${id}`);
+
+  source.onmessage = (event) => {
+    log.textContent += event.data + '\n';
+    log.scrollTop = log.scrollHeight;
+
+    const upperLine = event.data.toUpperCase();
+    const matchIndex = stages.findIndex((s) => upperLine.includes(s.dataset.stage));
+    if (matchIndex !== -1) {
+      stages.forEach((s, i) => {
+        s.classList.remove('active');
+        if (i < matchIndex) s.classList.add('done');
+        if (i === matchIndex) s.classList.add('active');
+      });
+    }
+  };
+
+  source.addEventListener('done', (event) => {
+    const ok = event.data === 'ok';
+    stages.forEach((s) => { s.classList.remove('active'); s.classList.add('done'); });
+    btn.disabled = false;
+    btn.classList.toggle('error', !ok);
+    btn.textContent = ok ? 'Ejecutar de nuevo' : 'Fallo — reintentar';
+    source.close();
+  });
+
+  source.onerror = () => {
+    btn.disabled = false;
+    btn.classList.add('error');
+    btn.textContent = 'Error de conexion — reintentar';
+    source.close();
+  };
+}
+
+loadExamples();
+</script>
+</body>
+</html>

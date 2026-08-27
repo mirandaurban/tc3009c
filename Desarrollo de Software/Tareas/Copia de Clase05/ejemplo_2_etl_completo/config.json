@@ -1,0 +1,21 @@
+{
+  "database_path": "data/vehicles.db",
+  "market_prices_path": "data/market_prices.csv",
+  "manufacturers_path": "data/manufacturers.json",
+  "aliases_path": "data/brand_aliases.json",
+  "watermark_path": "data/watermark_state.json",
+
+  "output_table": "vehicles_curated",
+  "quarantine_table": "etl_quarantine",
+  "audit_table": "etl_runs",
+
+  "current_year": 2026,
+  "allowed_currencies": ["MXN"],
+
+  "quality_thresholds": {
+    "completeness_min": 0.90,
+    "duplicate_rate_max": 0.05,
+    "unmatched_rate_max": 0.30,
+    "unknown_brand_rate_max": 0.20
+  }
+}

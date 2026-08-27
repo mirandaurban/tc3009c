@@ -1,0 +1,7 @@
+{
+  "Volkswagen": {"country": "Germany", "segment": "mainstream"},
+  "Nissan": {"country": "Japan", "segment": "mainstream"},
+  "Toyota": {"country": "Japan", "segment": "mainstream"},
+  "Mazda": {"country": "Japan", "segment": "mainstream"},
+  "Honda": {"country": "Japan", "segment": "mainstream"}
+}
