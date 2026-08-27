@@ -1,0 +1,5 @@
+[project]
+name = "proyecto-etl-vehiculos"
+version = "0.1.0"
+description = "Clase 4: ETL reproducible con SQLite, CSV y Python"
+requires-python = ">=3.11,<3.14"

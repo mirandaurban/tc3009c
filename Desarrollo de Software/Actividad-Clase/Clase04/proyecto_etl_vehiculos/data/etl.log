@@ -1,0 +1,137 @@
+[11:03:40] INFO ETL started
+[11:03:41] INFO SQLite: 10 records
+[11:03:41] INFO CSV: 12 records
+[11:03:41] INFO JSON aliases: 7 rules
+[11:03:41] INFO Integrated: 10 records
+[11:03:41] INFO Rejected: 2 records
+[11:03:41] INFO Validation passed: 10 records
+[11:03:41] INFO Load completed: vehicles_integrated and etl_rejects
+[11:03:41] INFO ETL finished
+[11:03:58] INFO ETL started
+[11:03:58] INFO SQLite: 10 records
+[11:03:58] INFO CSV: 12 records
+[11:03:58] INFO JSON aliases: 7 rules
+[11:04:05] INFO ETL started
+[11:04:05] INFO SQLite: 10 records
+[11:04:05] INFO CSV: 12 records
+[11:04:05] INFO JSON aliases: 7 rules
+[11:04:05] INFO Integrated: 8 records
+[11:04:05] INFO Rejected: 4 records
+[11:04:05] INFO Validation passed: 8 records
+[11:04:05] INFO Load completed: vehicles_integrated and etl_rejects
+[11:04:05] INFO ETL finished
+[11:04:20] INFO ETL started
+[11:04:20] INFO SQLite: 10 records
+[11:04:20] INFO CSV: 12 records
+[11:04:20] INFO JSON aliases: 7 rules
+[11:04:20] INFO Integrated: 9 records
+[11:04:20] INFO Rejected: 3 records
+[11:04:20] INFO Validation passed: 9 records
+[11:04:20] INFO Load completed: vehicles_integrated and etl_rejects
+[11:04:20] INFO ETL finished
+[11:05:33] INFO SQLite: 10 records
+[11:05:33] INFO CSV: 12 records
+[11:05:33] INFO JSON aliases: 7 rules
+[11:05:33] INFO Integrated: 9 records
+[11:05:33] INFO Rejected: 3 records
+[11:05:33] INFO Validation passed: 9 records
+[11:05:33] INFO Load completed: vehicles_integrated and etl_rejects
+[11:05:42] INFO ETL started
+[11:05:42] INFO SQLite: 10 records
+[11:05:42] INFO CSV: 12 records
+[11:05:42] INFO JSON aliases: 7 rules
+[11:05:42] INFO Integrated: 9 records
+[11:05:42] INFO Rejected: 3 records
+[11:05:42] INFO Validation passed: 9 records
+[11:05:42] INFO Load completed: vehicles_integrated and etl_rejects
+[11:05:42] INFO ETL finished
+[11:05:43] INFO ETL started
+[11:05:43] INFO SQLite: 10 records
+[11:05:43] INFO CSV: 12 records
+[11:05:43] INFO JSON aliases: 7 rules
+[11:05:43] INFO Integrated: 9 records
+[11:05:43] INFO Rejected: 3 records
+[11:05:43] INFO Validation passed: 9 records
+[11:05:43] INFO Load completed: vehicles_integrated and etl_rejects
+[11:05:43] INFO ETL finished
+[12:50:51] INFO SQLite: 10 records
+[12:50:51] INFO CSV: 12 records
+[12:50:51] INFO JSON aliases: 7 rules
+[12:50:51] INFO Integrated: 9 records
+[12:50:51] INFO Rejected: 3 records
+[12:50:51] INFO Validation passed: 9 records
+[12:50:51] INFO Load completed: vehicles_integrated and etl_rejects
+[12:52:25] INFO ETL started
+[12:52:25] INFO SQLite: 10 records
+[12:52:25] INFO CSV: 12 records
+[12:52:25] INFO JSON specs: 9 records
+[12:52:25] INFO JSON aliases: 7 rules
+[12:52:25] INFO Integrated: 9 records
+[12:52:25] INFO Rejected: 3 records
+[12:52:25] INFO Validation passed: 9 records
+[12:52:25] INFO Load completed: vehicles_integrated, etl_rejects and etl_runs
+[12:52:25] INFO ETL finished
+[12:52:51] INFO ETL started
+[12:52:51] INFO SQLite: 10 records
+[12:52:51] INFO CSV: 12 records
+[12:52:51] INFO JSON specs: 9 records
+[12:52:51] INFO JSON aliases: 7 rules
+[12:52:51] INFO Integrated: 9 records
+[12:52:51] INFO Rejected: 3 records
+[12:52:51] INFO Validation passed: 9 records
+[12:52:51] INFO Load completed: vehicles_integrated, etl_rejects and etl_runs
+[12:52:51] INFO ETL finished
+[12:52:52] INFO ETL started
+[12:52:52] INFO SQLite: 10 records
+[12:52:52] INFO CSV: 12 records
+[12:52:52] INFO JSON specs: 9 records
+[12:52:52] INFO JSON aliases: 7 rules
+[12:52:52] INFO Integrated: 9 records
+[12:52:52] INFO Rejected: 3 records
+[12:52:52] INFO Validation passed: 9 records
+[12:52:52] INFO Load completed: vehicles_integrated, etl_rejects and etl_runs
+[12:52:52] INFO ETL finished
+[12:53:10] INFO ETL started
+[12:53:10] INFO SQLite: 10 records
+[12:53:10] INFO CSV: 12 records
+[12:53:10] INFO JSON specs: 9 records
+[12:53:10] INFO JSON aliases: 7 rules
+[12:53:10] INFO Integrated: 9 records
+[12:53:10] INFO Rejected: 3 records
+[12:53:10] INFO Validation passed: 9 records
+[12:53:10] INFO Load completed: vehicles_integrated, etl_rejects and etl_runs
+[12:53:10] INFO ETL finished
+[12:53:11] INFO ETL started
+[12:53:11] INFO SQLite: 10 records
+[12:53:11] INFO CSV: 12 records
+[12:53:11] INFO JSON specs: 9 records
+[12:53:11] INFO JSON aliases: 7 rules
+[12:53:11] INFO Integrated: 9 records
+[12:53:11] INFO Rejected: 3 records
+[12:53:11] INFO Validation passed: 9 records
+[12:53:11] INFO Load completed: vehicles_integrated, etl_rejects and etl_runs
+[12:53:11] INFO ETL finished
+[12:53:51] INFO SQLite: 10 records
+[12:53:51] INFO CSV: 12 records
+[12:53:51] INFO JSON specs: 9 records
+[12:53:51] INFO JSON aliases: 7 rules
+[12:53:51] INFO Integrated: 9 records
+[12:53:51] INFO Rejected: 3 records
+[12:53:53] INFO Validation passed: 9 records
+[12:53:53] INFO Load completed: vehicles_integrated, etl_rejects and etl_runs
+[13:56:24] INFO SQLite: 10 records
+[13:56:24] INFO CSV: 12 records
+[13:56:24] INFO JSON specs: 9 records
+[13:56:24] INFO JSON aliases: 7 rules
+[13:56:24] INFO Integrated: 9 records
+[13:56:24] INFO Rejected: 3 records
+[13:56:24] INFO Validation passed: 9 records
+[13:56:24] INFO Load completed: vehicles_integrated, etl_rejects and etl_runs
+[20:14:24] INFO SQLite: 10 records
+[20:14:24] INFO CSV: 12 records
+[20:14:24] INFO JSON specs: 9 records
+[20:14:24] INFO JSON aliases: 7 rules
+[20:14:24] INFO Integrated: 9 records
+[20:14:24] INFO Rejected: 3 records
+[20:17:40] INFO Validation passed: 9 records
+[20:17:40] INFO Load completed: vehicles_integrated, etl_rejects and etl_runs

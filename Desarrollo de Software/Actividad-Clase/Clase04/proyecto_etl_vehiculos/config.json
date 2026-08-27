@@ -1,0 +1,9 @@
+{
+  "database_path": "data/vehicles.db",
+  "market_prices_path": "data/market_prices.csv",
+  "vehicle_specs_path": "data/vehicle_specs.json",
+  "output_table": "vehicles_integrated",
+  "rejects_table": "etl_rejects",
+  "log_path": "data/etl.log",
+  "run_date": "2026-08-20"
+}

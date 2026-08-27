@@ -1,0 +1,11 @@
+[
+  {"vehicle_id": 1, "city": "Monterrey", "category": "Sedan"},
+  {"vehicle_id": 2, "city": "Guadalajara", "category": "Sedan"},
+  {"vehicle_id": 3, "city": "Ciudad de Mexico", "category": "Sedan"},
+  {"vehicle_id": 4, "city": "Monterrey", "category": "Sedan"},
+  {"vehicle_id": 5, "city": "Guadalajara", "category": "Sedan"},
+  {"vehicle_id": 6, "city": "Ciudad de Mexico", "category": "Sedan"},
+  {"vehicle_id": 7, "city": "Monterrey", "category": "Sedan"},
+  {"vehicle_id": 8, "city": "Ciudad de Mexico", "category": "SUV"},
+  {"vehicle_id": 9, "city": "Guadalajara", "category": "Sedan"}
+]
