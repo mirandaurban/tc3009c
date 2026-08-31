@@ -1,0 +1,21 @@
+Paquete de benchmark: pandas vs. Spark (caso de vehículos)
+============================================================
+
+CONTENIDO
+- pandas_vs_spark.docx        Documento formal con metodología, resultados
+                               medidos y proyección para 50 millones de filas.
+- generate_data.py             Genera vehicles.csv / manufacturers.csv a la
+                               escala que se indique.
+- pandas_etl.py                Pipeline ETL en pandas (con tiempos y memoria).
+- spark_etl.py                 El mismo pipeline en PySpark (con tiempos).
+- run_benchmark.py              Corre ambos y guarda benchmark_result.json.
+- benchmark_result_50k.json     Resultado real medido a 50,000 filas.
+- benchmark_result_2m.json      Resultado real medido a 2,000,000 de filas.
+
+CÓMO CORRER EL CASO COMPLETO (50 millones de filas) EN LA MÁQUINA REAL
+1. python generate_data.py --rows 50000000 --out-dir data
+2. python run_benchmark.py --data-dir data
+3. Revisar benchmark_result.json con los tiempos reales de esa máquina.
+
+Requiere: pandas, pyarrow, pyspark==3.5.1 (mismo requirements.txt de la
+práctica ya entregada).

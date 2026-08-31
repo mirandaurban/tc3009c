@@ -1,0 +1,15 @@
+{
+  "rows": 2000005,
+  "csv_size_mb": 63.3,
+  "pandas": {
+    "wall_time_s": 13.14,
+    "reported_total_s": 12.48,
+    "peak_memory_mb": 413.1,
+    "returncode": 0
+  },
+  "spark": {
+    "wall_time_s": 56.11,
+    "reported_total_s": 54.96,
+    "returncode": 0
+  }
+}

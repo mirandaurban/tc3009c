@@ -1,0 +1,14 @@
+# Dependencias opcionales para testing automatizado en un entorno real.
+#
+# No se instalan como parte de esta práctica: 08_produccion.py ilustra el
+# patrón de testing (función pura + assert) sin depender de pytest. En un
+# proyecto real, este archivo se instalaría con:
+#
+#     pip install -r requirements-dev.txt
+#
+# y se usaría junto con una fixture de sesión (scope="session") en
+# conftest.py para correr test_*.py con:
+#
+#     pytest
+#
+pytest==8.3.3
