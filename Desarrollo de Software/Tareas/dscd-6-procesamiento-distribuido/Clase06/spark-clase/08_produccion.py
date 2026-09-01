@@ -83,6 +83,7 @@ vehicles_raw = (
     .csv("data/vehicles.csv")
 )
 
+vehicles_raw.cache()
 original_count = vehicles_raw.count()
 
 corrupt = vehicles_raw.filter(col("_corrupt_record").isNotNull())
