@@ -1,0 +1,19 @@
+{
+  "rows": 50000005,
+  "csv_size_mb": 1645.2,
+  "pandas": {
+    "start_time": "2026-09-01 11:23:29",
+    "end_time": "2026-09-01 11:24:39",
+    "wall_time_s": 69.77,
+    "reported_total_s": 69.27,
+    "peak_memory_mb": 10320.9,
+    "returncode": 0
+  },
+  "spark": {
+    "start_time": "2026-09-01 11:24:39",
+    "end_time": "2026-09-01 11:25:19",
+    "wall_time_s": 40.07,
+    "reported_total_s": null,
+    "returncode": 1
+  }
+}

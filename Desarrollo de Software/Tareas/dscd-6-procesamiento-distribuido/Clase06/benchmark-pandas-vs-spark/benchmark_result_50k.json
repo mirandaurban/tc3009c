@@ -2,14 +2,18 @@
   "rows": 50005,
   "csv_size_mb": 1.5,
   "pandas": {
-    "wall_time_s": 1.51,
-    "reported_total_s": 0.92,
+    "start_time": "2026-08-31 20:29:58",
+    "end_time": "2026-08-31 20:29:59",
+    "wall_time_s": 0.44,
+    "reported_total_s": 0.13,
     "peak_memory_mb": 10.6,
     "returncode": 0
   },
   "spark": {
-    "wall_time_s": 54.6,
-    "reported_total_s": 53.23,
+    "start_time": "2026-08-31 20:29:59",
+    "end_time": "2026-08-31 20:30:06",
+    "wall_time_s": 7.74,
+    "reported_total_s": 7.01,
     "returncode": 0
   }
 }
