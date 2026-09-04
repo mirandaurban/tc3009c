@@ -1,0 +1,42 @@
+{
+  "seed": 752391,
+  "n_patients": 8000,
+  "n_appointments": 60000,
+
+  "paths": {
+    "database": "data/clinica.db",
+    "tarifas": "data/tarifas_especialidad.csv",
+    "catalogo": "data/catalogo_clinicas.json",
+
+    "profile": "data/data_profile.json",
+    "watermark": "data/watermark.json",
+    "output_database": "data/clinica_curated.db"
+  },
+
+  "output_tables": {
+    "patients_table": "patients_table",
+    "clinicas_table": "clinicas_table",
+    "especialidades_table": "especialidades_table",
+    "appointments_table": "appointments_table",
+    "date_table": "date_table",
+    "quarantine_table": "quarantine_table"
+  },
+
+  "quality_thresholds": {
+    "completeness_min": 0.70,
+    "duplicate_rate_max": 0.05,
+    "null_foreign_key_max": 0.10,
+    "invalid_amount_max": 0.05
+  },
+  "allowed_statuses": ["completada", "no_show", "cancelada"],
+  "allowed_payment_methods": ["efectivo", "tarjeta", "transferencia", "aseguradora"],
+  "defect_probabilities": {
+    "D1_orphan_fk": 0.02,
+    "D2_invalid_amount": 0.01,
+    "D3_null_relevant": 0.03,
+    "D4_duplicates": 0.02,
+    "D5_nomenclature": 0.05,
+    "D6_silent_defect": 0.04,
+    "D7_impossible_rule": 0.005
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "clinicas": [
+    {
+      "clinic_code": "CL01",
+      "nombre": "SaludNorte Centro",
+      "ciudad": "Monterrey",
+      "zona": "norte",
+      "aliases": [
+        "CL-01",
+        "cl01",
+        "Clinica Centro",
+        "SaludNorte",
+        "SN01"
+      ]
+    },
+    {
+      "clinic_code": "CL02",
+      "nombre": "Hospital Sur",
+      "ciudad": "Guadalajara",
+      "zona": "sur",
+      "aliases": [
+        "CL-02",
+        "cl02",
+        "Hospital del Sur",
+        "HS02",
+        "Clinica Sur"
+      ]
+    },
+    {
+      "clinic_code": "CL03",
+      "nombre": "Centro Médico Central",
+      "ciudad": "CDMX",
+      "zona": "centro",
+      "aliases": [
+        "CL-03",
+        "cl03",
+        "CMC",
+        "Central",
+        "Clinica Central"
+      ]
+    },
+    {
+      "clinic_code": "CL04",
+      "nombre": "Clínica del Este",
+      "ciudad": "Puebla",
+      "zona": "este",
+      "aliases": [
+        "CL-04",
+        "cl04",
+        "Este",
+        "Clinica Este",
+        "CE04"
+      ]
+    },
+    {
+      "clinic_code": "CL05",
+      "nombre": "Salud del Oeste",
+      "ciudad": "Tijuana",
+      "zona": "oeste",
+      "aliases": [
+        "CL-05",
+        "cl05",
+        "Oeste",
+        "Clinica Oeste",
+        "SO05"
+      ]
+    }
+  ],
+  "especialidad_aliases": {
+    "Medicina General": [
+      "med gral",
+      "MEDICINA_GENERAL",
+      "medicina general ",
+      "MG",
+      "med-general"
+    ],
+    "Pediatría": [
+      "pediatria",
+      "PEDIATRIA",
+      "pediatría",
+      "PED",
+      "ped"
+    ],
+    "Traumatología": [
+      "traumatologia",
+      "TRAUMA",
+      "Traumatología",
+      "TRA",
+      "trauma"
+    ],
+    "Cardiología": [
+      "cardiologia",
+      "CARDIOLOGIA",
+      "Cardiología",
+      "CAR",
+      "cardio"
+    ],
+    "Dermatología": [
+      "dermatologia",
+      "DERMATOLOGIA",
+      "Dermatología",
+      "DER",
+      "derma"
+    ],
+    "Ginecología": [
+      "ginecologia",
+      "GINECOLOGIA",
+      "Ginecología",
+      "GIN",
+      "gineco"
+    ],
+    "Odontología": [
+      "odontologia",
+      "ODONTOLOGIA",
+      "Odontología",
+      "ODO",
+      "odonto"
+    ],
+    "Oftalmología": [
+      "oftalmologia",
+      "OFTALMOLOGIA",
+      "Oftalmología",
+      "OFT",
+      "oftalmo"
+    ]
+  }
+}
