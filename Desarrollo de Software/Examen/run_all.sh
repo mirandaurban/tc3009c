@@ -16,3 +16,7 @@ pip install -q -r requirements.txt
 echo ""
 echo ">>> 1) Sembrando base fuente (data/vehicles.db)"
 python scripts/seed_database.py
+
+echo ""
+echo ">>> 2) Corriendo pipeline de ETL"
+python scripts/seed_database.py

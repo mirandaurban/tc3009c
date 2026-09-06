@@ -10,26 +10,26 @@
 
     "profile": "data/data_profile.json",
     "watermark": "data/watermark.json",
-    "output_database": "data/clinica_curated.db"
+    "output_database": "data/clinica_curated.db",
+    "log_file": "data/etl.log"
   },
 
   "output_tables": {
-    "patients_table": "patients_table",
-    "clinicas_table": "clinicas_table",
-    "especialidades_table": "especialidades_table",
-    "appointments_table": "appointments_table",
-    "date_table": "date_table",
-    "quarantine_table": "quarantine_table"
+    "fact_appointments": "fact_appointments",
+    "quarantine": "quarantine",
+    "audit": "etl_runs"
   },
 
   "quality_thresholds": {
     "completeness_min": 0.70,
     "duplicate_rate_max": 0.05,
     "null_foreign_key_max": 0.10,
-    "invalid_amount_max": 0.05
+    "invalid_amount_max": 0.05,
+    "max_rule_violation_pct": 0.15
   },
   "allowed_statuses": ["completada", "no_show", "cancelada"],
   "allowed_payment_methods": ["efectivo", "tarjeta", "transferencia", "aseguradora"],
+
   "defect_probabilities": {
     "D1_orphan_fk": 0.02,
     "D2_invalid_amount": 0.01,
