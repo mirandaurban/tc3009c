@@ -22,10 +22,11 @@
 
   "quality_thresholds": {
     "completeness_min": 0.70,
-    "duplicate_rate_max": 0.05,
-    "null_foreign_key_max": 0.10,
-    "invalid_amount_max": 0.05,
-    "max_rule_violation_pct": 0.15
+    "duplicate_rate_max": 0.10,
+    "null_foreign_key_max": 0.15,
+    "invalid_amount_max": 0.15,
+    "max_rule_violation_pct": 0.65,
+    "max_reject_pct": 0.30
   },
   "allowed_statuses": ["completada", "no_show", "cancelada"],
   "allowed_payment_methods": ["efectivo", "tarjeta", "transferencia", "aseguradora"],

@@ -1,0 +1,33 @@
+[2026-09-06 21:49:13] INFO ============================================================
+[2026-09-06 21:49:13] INFO ETL COMPLETO iniciado
+[2026-09-06 21:49:13] INFO run_id=run_20260906_214913_bf49a298 batch_id=batch_20260906_214913_05bf5c2a
+[2026-09-06 21:49:13] INFO watermark_before=2024-01-01 00:00:00
+[2026-09-06 21:49:13] INFO BUILD: Tablas creadas/verificadas: ['fact_appointments', 'quarantine', 'etl_runs']
+[2026-09-06 21:49:13] INFO EXTRACT: 58556 citas nuevas/modificadas desde watermark=2024-01-01 00:00:00 | 8000 pacientes | 40 tarifas | 2 clínicas
+[2026-09-06 21:49:13] INFO STAGE: batch_id=batch_20260906_214913_05bf5c2a asignado a 8000 pacientes, 58556 citas, 40 tarifas
+[2026-09-06 21:49:13] INFO VALIDATE: Validando datos...
+[2026-09-06 21:50:21] INFO VALIDATE TOTAL: validos=60349 quarantine=6247
+[2026-09-06 21:50:21] INFO VALIDATE: 8000 pacientes, 52309 citas, 40 tarifas válidas
+[2026-09-06 21:50:21] INFO TRANSFORM pacientes: 8000 transformados
+[2026-09-06 21:50:23] INFO TRANSFORM citas: 52309 transformadas
+[2026-09-06 21:50:23] INFO TRANSFORM tarifas: 40 transformadas
+[2026-09-06 21:50:24] INFO INTEGRATE / RECONCILIATION: {'rows_before': 52309, 'rows_after': 52309, 'matched_with_patient': 52309, 'unmatched_patient': 0, 'matched_with_tarifa': 48369, 'unmatched_tarifa': 3940, 'duplicated_appointment_id': 0, 'unique_patients': 6995, 'unique_clinics': 10, 'unique_specialties': 42, 'total_revenue': 49607572.56, 'avg_revenue_gap': -277.187426037338, 'no_show_count': 6741, 'peak_hour_count': 39329, 'avg_patient_age': 46.948421877688354}
+[2026-09-06 21:50:24] WARNING 3940 citas sin tarifa correspondiente (clinic_code + specialty missing)
+[2026-09-06 21:50:24] INFO QUALITY GATE: status=PASS metrics={'total_rows': 52309, 'completeness': 1.0, 'duplicate_rate': 0.0, 'unmatched_patient_rate': 0.0, 'unmatched_tarifa_rate': 0.0753, 'no_show_rate': 0.1289, 'avg_patient_age': 46.948421877688354, 'total_revenue': 49607572.56, 'unique_patients': 6995, 'unique_clinics': 10, 'unique_specialties': 42}
+[2026-09-06 21:50:24] INFO QUALITY GATE: status=PASS
+[2026-09-06 21:50:26] INFO LOAD: 6247 registros en cuarentena
+[2026-09-06 21:50:26] INFO LOAD: 52309 insertados, 0 actualizados (UPSERT) en fact_appointments
+[2026-09-06 21:50:26] INFO LOAD: 52309 insertados, 0 actualizados
+[2026-09-06 21:50:26] INFO AUDIT: Watermark actualizado: 2024-01-01 00:00:00 -> 2025-11-28 11:30:00
+[2026-09-06 21:50:26] INFO AUDIT: run_id=run_20260906_214913_bf49a298 status=SUCCESS registrado en etl_runs
+[2026-09-06 21:50:26] INFO ============================================================
+[2026-09-06 21:50:26] INFO ETL COMPLETO finalizado exitosamente
+[2026-09-06 21:50:26] INFO run_id=run_20260906_214913_bf49a298 batch_id=batch_20260906_214913_05bf5c2a
+[2026-09-06 21:50:26] INFO watermark: 2024-01-01 00:00:00 -> 2025-11-28 11:30:00
+[2026-09-06 21:50:26] INFO RESUMEN:
+[2026-09-06 21:50:26] INFO   - Citas fuente: 58556
+[2026-09-06 21:50:26] INFO   - Citas válidas: 52309
+[2026-09-06 21:50:26] INFO   - Citas en cuarentena: 6247
+[2026-09-06 21:50:26] INFO   - Insertadas: 52309
+[2026-09-06 21:50:26] INFO   - Actualizadas: 0
+[2026-09-06 21:50:26] INFO   - Quality Gate: PASS

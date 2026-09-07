@@ -231,7 +231,7 @@ def build_appointments(patients, weights, tarifas):
         specialty = rng.choice(SPECIALTIES, p=specialty_weights)
         
         scheduled_at = generate_datetime(start_date, end_date)
-        duration_min = rng.choice([15, 20, 30, 45, 60], p=[0.30, 0.25, 0.25, 0.15, 0.05])
+        duration_min = int(rng.choice([15, 20, 30, 45, 60], p=[0.30, 0.25, 0.25, 0.15, 0.05]))
         status = rng.choice(['completada', 'no_show', 'cancelada'], p=[0.78, 0.13, 0.09])
         
         # Monto cobrado

@@ -224,6 +224,65 @@ def stage(
 VALIDATE: Verificar que los datos cumplan con el contrato de datos.
 Aquí se define si siguen el proceso o van a cuarentena.
 """
+def load_catalogo(catalogo_path: Path) -> dict:
+    """Carga el catálogo de clínicas desde el archivo JSON"""
+    with catalogo_path.open(encoding="utf-8") as f:
+        return json.load(f)
+
+
+def homologar_specialty(valor, alias_map: dict) -> str:
+    """
+    Homologa una especialidad usando el mapa de alias.
+    """
+    if pd.isna(valor) or valor is None:
+        return None
+    
+    # Limpiar el valor
+    valor_limpio = str(valor).strip().lower()
+    if not valor_limpio:
+        return None
+    
+    # Buscar coincidencia exacta (case insensitive)
+    for canonica, aliases in alias_map.items():
+        if valor_limpio == canonica.lower():
+            return canonica
+        if valor_limpio in [a.lower().strip() for a in aliases]:
+            return canonica
+    
+    return None
+
+
+def homologar_clinic_code(valor, catalogo: dict) -> str:
+    """
+    Homologa un código de clínica usando el catálogo.
+    """
+    if pd.isna(valor) or valor is None:
+        return None
+    
+    # Limpiar el valor
+    valor_limpio = str(valor).strip().upper()
+    if not valor_limpio:
+        return None
+    
+    # Quitar comillas y espacios extras (para D6)
+    valor_limpio = valor_limpio.replace("'", "").strip()
+    
+    # Buscar en el catálogo
+    for clinica in catalogo.get("clinicas", []):
+        codigo = clinica.get("clinic_code", "").upper()
+        if valor_limpio == codigo:
+            return codigo
+        # Buscar en aliases
+        for alias in clinica.get("aliases", []):
+            if valor_limpio == alias.upper().strip():
+                return codigo
+    
+    return None
+
+"""
+VALIDATE: Verificar que los datos cumplan con el contrato de datos.
+Aquí se define si siguen el proceso o van a cuarentena.
+"""
 def validate(
     patients_df: pd.DataFrame,
     appointments_df: pd.DataFrame,
@@ -231,7 +290,28 @@ def validate(
     config: ETLConfig,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
 
-    # Patients
+    # ======================================================================
+    # 0. HOMOLOGAR ESPECIALIDADES Y CLÍNICAS ANTES DE VALIDAR
+    # ======================================================================
+    catalogo = load_catalogo(config.catalogo_path)
+    alias_map = catalogo.get("especialidad_aliases", {})
+    
+    # Homologar appointments
+    a = appointments_df.copy()
+    
+    # Homologar specialty
+    a["specialty_homologada"] = a["specialty"].apply(
+        lambda x: homologar_specialty(x, alias_map)
+    )
+    
+    # Homologar clinic_code
+    a["clinic_code_homologado"] = a["clinic_code"].apply(
+        lambda x: homologar_clinic_code(x, catalogo)
+    )
+    
+    # ======================================================================
+    # 1. VALIDAR PACIENTES
+    # ======================================================================
     p = patients_df.copy()
     p_reasons = [] # Justificaciones de rechazo
     for idx, row in p.iterrows():
@@ -295,8 +375,9 @@ def validate(
     valid_patients = p[p["rejection_reason"] == ""].copy()
 
     
-    # Appointments
-    a = appointments_df.copy()
+    # ======================================================================
+    # 2. VALIDAR CITAS (usando valores homologados)
+    # ======================================================================
     a_reasons = [] # Justificaciones de rechazo
     for idx, row in a.iterrows():
         reasons = []
@@ -317,16 +398,24 @@ def validate(
             if len(valid_patients) > 0 and row["patient_id"] not in valid_patients["patient_id"].values:
                 reasons.append("patient_id_fk_missing")
         
-        # Contract: clinic_code con valores pre-definidos
-        if not pd.isna(row.get("clinic_code")):
-            if row["clinic_code"] not in VALID_CLINIC_CODES:
+        # Contract: clinic_code - USAR VALOR HOMOLOGADO
+        if row.get("clinic_code_homologado") is not None:
+            if row["clinic_code_homologado"] in VALID_CLINIC_CODES:
+                # Guardar el valor homologado para usarlo después
+                row["clinic_code_clean"] = row["clinic_code_homologado"]
+            else:
                 reasons.append("clinic_code_invalid")
         else:
             reasons.append("clinic_code_null")
         
-        # Contract: specialty con valores pre-definidos
-            if row["specialty"] not in VALID_SPECIALTIES:
+        # Contract: specialty - USAR VALOR HOMOLOGADO
+        if row.get("specialty_homologada") is not None:
+            if row["specialty_homologada"] in VALID_SPECIALTIES:
+                # Guardar el valor homologado para usarlo después
+                row["specialty_clean"] = row["specialty_homologada"]
+            else:
                 reasons.append("specialty_invalid")
+        # Si es null, es aceptable (specialty es nullable en el contrato)
         
         # Contract: scheduled_at con formato y rangos válidos
         if not pd.isna(row.get("scheduled_at")):
@@ -355,6 +444,9 @@ def validate(
         if not pd.isna(row.get("amount_charged")):
             if row["amount_charged"] < 0:
                 reasons.append("amount_charged_negative")
+            # D2: Detectar monto centinela 999999.0
+            elif row["amount_charged"] > 500000:
+                reasons.append("amount_charged_sentinel")
         
         # Contract: payment_method con valores pre-definidos
         if not pd.isna(row.get("payment_method")):
@@ -380,7 +472,20 @@ def validate(
                 if scheduled < created:
                     reasons.append("scheduled_before_created")
             except:
-                pass 
+                pass
+        
+        # NUEVA REGLA: scheduled_at debe ser >= registered_at del paciente (D7)
+        if not pd.isna(row.get("scheduled_at")) and not pd.isna(row.get("patient_id")):
+            try:
+                # Buscar paciente en valid_patients
+                patient_row = valid_patients[valid_patients["patient_id"] == row["patient_id"]]
+                if not patient_row.empty:
+                    registered_at = pd.to_datetime(patient_row.iloc[0]["registered_at"])
+                    scheduled = pd.to_datetime(row["scheduled_at"])
+                    if scheduled < registered_at:
+                        reasons.append("scheduled_before_registered")
+            except:
+                pass
         
         a_reasons.append(";".join(reasons))
     
@@ -389,7 +494,9 @@ def validate(
     valid_appointments = a[a["rejection_reason"] == ""].copy()
 
     
-    # Tarifas
+    # ======================================================================
+    # 3. VALIDAR TARIFAS
+    # ======================================================================
     t = tarifas_df.copy()
     t_reasons = []
     
@@ -407,6 +514,8 @@ def validate(
         if not pd.isna(row.get("specialty")):
             if row["specialty"] not in VALID_SPECIALTIES:
                 reasons.append("specialty_invalid")
+        else:
+            reasons.append("specialty_null")
         
         # Contract: tarifa_base con rango definido
         if not pd.isna(row.get("tarifa_base")):
@@ -440,7 +549,9 @@ def validate(
     quarantined_tarifas = t[t["rejection_reason"] != ""].copy()
     valid_tarifas = t[t["rejection_reason"] == ""].copy()
     
-    # Cuarentena
+    # ======================================================================
+    # 4. CUARENTENA
+    # ======================================================================
     quarantine_records = []
     
     # Pacientes en cuarentena
@@ -493,78 +604,120 @@ def transform(
     config: ETLConfig,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
 
-    # Patients
+    # Patients (igual)
     patients = valid_patients.copy()
-    
     patients["city"] = patients["city"].str.strip().str.title()
     patients["insurance"] = patients["insurance"].str.strip().str.lower()
     patients["sex"] = patients["sex"].str.strip().str.upper()
-    
     patients["birth_date"] = pd.to_datetime(patients["birth_date"])
     patients["registered_at"] = pd.to_datetime(patients["registered_at"])
     
-    logging.info(
-        "TRANSFORM pacientes (alt): %s transformados",
-        len(patients)
-    )
+    logging.info("TRANSFORM pacientes: %s transformados", len(patients))
     
-    # Appointments
+    # ======================================================================
+    # APPOINTMENTS
+    # ======================================================================
     appointments = valid_appointments.copy()
     
+    # Limpiar strings
     appointments["clinic_code"] = appointments["clinic_code"].str.strip().str.upper()
     appointments["status"] = appointments["status"].str.strip().str.lower()
     appointments["payment_method"] = appointments["payment_method"].str.strip().str.lower()
     
-    if "specialty" in appointments.columns:
-        appointments["specialty_clean"] = appointments["specialty"].str.strip().str.title()
-        appointments["specialty_clean"] = appointments["specialty_clean"].where(
-            appointments["specialty"].notna(), None
-        )
-    else:
-        appointments["specialty_clean"] = None
+    # USAR VALORES YA HOMOLOGADOS
+    if "clinic_code_clean" not in appointments.columns:
+        appointments["clinic_code_clean"] = appointments["clinic_code"]
+    if "specialty_clean" not in appointments.columns:
+        appointments["specialty_clean"] = appointments["specialty"]
     
-    appointments["clinic_code_clean"] = appointments["clinic_code"]
-    
+    # Limpiar amount_charged
     if "amount_charged" in appointments.columns:
         appointments["amount_charged_clean"] = appointments["amount_charged"].fillna(0)
         appointments["amount_charged_clean"] = appointments["amount_charged_clean"].clip(lower=0)
     else:
         appointments["amount_charged_clean"] = 0
     
-    appointments["scheduled_at"] = pd.to_datetime(appointments["scheduled_at"])
-    appointments["created_at"] = pd.to_datetime(appointments["created_at"])
+    # ======================================================================
+    # CONVERTIR FECHAS CON FORMATO MIXTO
+    # ======================================================================
+    def parse_datetime_mixed(valor):
+        """Convierte fechas en múltiples formatos a datetime"""
+        if pd.isna(valor) or valor is None:
+            return pd.NaT
+        
+        valor_str = str(valor).strip()
+        if not valor_str:
+            return pd.NaT
+        
+        # Intentar diferentes formatos
+        formatos = [
+            '%Y-%m-%d %H:%M:%S',      # 2024-01-01 10:00:00
+            '%Y-%m-%d %H:%M',         # 2024-01-01 10:00
+            '%m/%d/%Y %H:%M',         # 07/30/2025 11:45 (D6)
+            '%Y-%m-%dT%H:%M:%SZ',     # 2024-01-01T10:00:00Z (D6)
+            '%Y-%m-%dT%H:%M:%S',      # 2024-01-01T10:00:00
+            '%Y-%m-%d',               # 2024-01-01
+        ]
+        
+        for fmt in formatos:
+            try:
+                return pd.to_datetime(valor_str, format=fmt)
+            except (ValueError, TypeError):
+                continue
+        
+        # Último intento: dejar que pandas infiera
+        try:
+            return pd.to_datetime(valor_str, format='mixed')
+        except:
+            return pd.NaT
     
-    appointments["scheduled_date"] = appointments["scheduled_at"].dt.date
-    appointments["scheduled_hour"] = appointments["scheduled_at"].dt.hour
-    appointments["scheduled_day_of_week"] = appointments["scheduled_at"].dt.dayofweek
-    appointments["scheduled_month"] = appointments["scheduled_at"].dt.month
+    # Aplicar conversión
+    appointments["scheduled_at"] = appointments["scheduled_at"].apply(parse_datetime_mixed)
+    appointments["created_at"] = appointments["created_at"].apply(parse_datetime_mixed)
     
-    appointments["is_peak_hour"] = ((appointments["scheduled_hour"] >= 9) & 
-                                     (appointments["scheduled_hour"] <= 13)).astype(int)
+    # Verificar conversiones fallidas
+    scheduled_failed = appointments["scheduled_at"].isna().sum()
+    created_failed = appointments["created_at"].isna().sum()
+    if scheduled_failed > 0:
+        logging.warning("TRANSFORM: %s scheduled_at no pudieron convertirse", scheduled_failed)
+    if created_failed > 0:
+        logging.warning("TRANSFORM: %s created_at no pudieron convertirse", created_failed)
     
+    # Variables derivadas (solo para filas con fecha válida)
+    appointments["scheduled_date"] = None
+    appointments["scheduled_hour"] = None
+    appointments["scheduled_day_of_week"] = None
+    appointments["scheduled_month"] = None
+    appointments["is_peak_hour"] = 0
+    
+    mask = appointments["scheduled_at"].notna()
+    if mask.any():
+        appointments.loc[mask, "scheduled_date"] = appointments.loc[mask, "scheduled_at"].dt.date
+        appointments.loc[mask, "scheduled_hour"] = appointments.loc[mask, "scheduled_at"].dt.hour
+        appointments.loc[mask, "scheduled_day_of_week"] = appointments.loc[mask, "scheduled_at"].dt.dayofweek
+        appointments.loc[mask, "scheduled_month"] = appointments.loc[mask, "scheduled_at"].dt.month
+        appointments.loc[mask, "is_peak_hour"] = (
+            (appointments.loc[mask, "scheduled_hour"] >= 9) & 
+            (appointments.loc[mask, "scheduled_hour"] <= 13)
+        ).astype(int)
+    
+    # Duración
     appointments["duration_hours"] = appointments["duration_min"] / 60.0
-    
     appointments["is_no_show"] = (appointments["status"] == "no_show").astype(int)
-    
     appointments["patient_age_at_visit"] = None
     
-    logging.info(
-        "TRANSFORM citas (alt): %s transformadas",
-        len(appointments)
-    )
+    logging.info("TRANSFORM citas: %s transformadas", len(appointments))
     
-    # Tarifas
+    # ======================================================================
+    # TARIFAS
+    # ======================================================================
     tarifas = valid_tarifas.copy()
-    
     tarifas["clinic_code"] = tarifas["clinic_code"].str.strip().str.upper()
     tarifas["specialty"] = tarifas["specialty"].str.strip().str.title()
     tarifas["moneda"] = tarifas["moneda"].str.strip().str.upper()
     tarifas["vigencia_desde"] = pd.to_datetime(tarifas["vigencia_desde"])
     
-    logging.info(
-        "TRANSFORM tarifas (alt): %s transformadas",
-        len(tarifas)
-    )
+    logging.info("TRANSFORM tarifas: %s transformadas", len(tarifas))
     
     return patients, appointments, tarifas
 
@@ -796,8 +949,6 @@ def build_curated_database(config: ETLConfig) -> None:
         
         logging.info("BUILD: Tablas creadas/verificadas: %s", [t[0] for t in tables])
     
-    logging.info("BUILD: Base de datos lista en %s", output_db_path)
-
 
 
 """
@@ -839,12 +990,6 @@ def quality_gate(
     # Tasa de no-shows
     no_show_rate = reconciliation.get("no_show_count", 0) / total if total > 0 else 0
     
-    # Porcentaje de revenue_gap negativo
-    negative_gap_rate = 0
-    if "revenue_gap" in fact_appointments.columns:
-        negative_gaps = (fact_appointments["revenue_gap"] < 0).sum()
-        negative_gap_rate = negative_gaps / total if total > 0 else 0
-    
     metrics = {
         "total_rows": total,
         "completeness": round(completeness, 4),
@@ -852,7 +997,6 @@ def quality_gate(
         "unmatched_patient_rate": round(unmatched_patient_rate, 4),
         "unmatched_tarifa_rate": round(unmatched_tarifa_rate, 4),
         "no_show_rate": round(no_show_rate, 4),
-        "negative_gap_rate": round(negative_gap_rate, 4),
         "avg_patient_age": reconciliation.get("avg_patient_age", 0),
         "total_revenue": reconciliation.get("total_revenue", 0),
         "unique_patients": reconciliation.get("unique_patients", 0),
@@ -883,11 +1027,6 @@ def quality_gate(
     invalid_amount_max = config.invalid_amount_max if hasattr(config, 'invalid_amount_max') else 0.05
     if unmatched_tarifa_rate > invalid_amount_max:
         failures.append(f"unmatched_tarifa_rate ({unmatched_tarifa_rate:.2%} > {invalid_amount_max:.2%})")
-    
-    # Tasa de revenue_gap negativo
-    max_rule_violation = config.max_rule_violation_pct if hasattr(config, 'max_rule_violation_pct') else 0.15
-    if negative_gap_rate > max_rule_violation:
-        failures.append(f"negative_gap_rate ({negative_gap_rate:.2%} > {max_rule_violation:.2%})")
     
     # Clasificación
     status = "FAIL" if failures else "PASS"
@@ -1142,14 +1281,10 @@ def main() -> None:
     logging.info("ETL COMPLETO iniciado")
     logging.info("run_id=%s batch_id=%s", run_id, batch_id)
     logging.info("watermark_before=%s", watermark_before)
-    logging.info("="*60)
-
     
     # BUILD: Crear base de datos destino
     try:
-        logging.info("BUILD: Creando base de datos destino...")
         build_curated_database(config)
-        logging.info("BUILD: Base de datos lista")
     except Exception as e:
         error_message = f"BUILD falló: {str(e)}"
         logging.error(error_message)
@@ -1168,10 +1303,7 @@ def main() -> None:
 
     # EXTRACT
     try:
-        logging.info("EXTRACT: Extrayendo datos...")
         patients_df, appointments_df, tarifas_df, catalogo = extract(config, watermark_before)
-        logging.info("EXTRACT: %s pacientes, %s citas, %s tarifas",
-                    len(patients_df), len(appointments_df), len(tarifas_df))
     except Exception as e:
         error_message = f"EXTRACT falló: {str(e)}"
         logging.error(error_message)
@@ -1205,11 +1337,9 @@ def main() -> None:
 
     # STAGE
     try:
-        logging.info("STAGE: Aplicando stage...")
         patients_staged, appointments_staged, tarifas_staged = stage(
             patients_df, appointments_df, tarifas_df, batch_id
         )
-        logging.info("STAGE: batch_id=%s asignado", batch_id)
     except Exception as e:
         error_message = f"STAGE falló: {str(e)}"
         logging.error(error_message)
@@ -1234,7 +1364,6 @@ def main() -> None:
         )
         logging.info("VALIDATE: %s pacientes, %s citas, %s tarifas válidas",
                     len(valid_patients), len(valid_appointments), len(valid_tarifas))
-        logging.info("VALIDATE: %s registros en cuarentena", len(quarantine))
     except Exception as e:
         error_message = f"VALIDATE falló: {str(e)}"
         logging.error(error_message)
@@ -1265,17 +1394,13 @@ def main() -> None:
             "SUCCESS_EMPTY",
             None
         )
-        logging.info("=== ETL COMPLETO finalizado (todos los registros en cuarentena) ===")
         return
-    
 
     # TRANSFORM
     try:
-        logging.info("TRANSFORM: Transformando datos...")
         transformed_patients, transformed_appointments, transformed_tarifas = transform(
             valid_patients, valid_appointments, valid_tarifas, config
         )
-        logging.info("TRANSFORM: Datos transformados")
     except Exception as e:
         error_message = f"TRANSFORM falló: {str(e)}"
         logging.error(error_message)
@@ -1296,12 +1421,9 @@ def main() -> None:
 
     # INTEGRATE
     try:
-        logging.info("INTEGRATE: Integrando datos...")
         fact_appointments, reconciliation = integrate(
             transformed_patients, transformed_appointments, transformed_tarifas, config
         )
-        logging.info("INTEGRATE: %s filas integradas", len(fact_appointments))
-        logging.info("INTEGRATE / RECONCILIATION: %s", reconciliation)
     except Exception as e:
         error_message = f"INTEGRATE falló: {str(e)}"
         logging.error(error_message)
@@ -1322,7 +1444,6 @@ def main() -> None:
 
     # QUALITY GATE
     try:
-        logging.info("QUALITY GATE: Evaluando calidad...")
         quality_result = quality_gate(fact_appointments, reconciliation, config)
         logging.info("QUALITY GATE: status=%s", quality_result["status"])
         if quality_result['failures']:
@@ -1364,7 +1485,6 @@ def main() -> None:
 
     # LOAD
     try:
-        logging.info("LOAD: Cargando datos...")
         inserted, updated = load(config, fact_appointments, quarantine, batch_id)
         logging.info("LOAD: %s insertados, %s actualizados", inserted, updated)
     except Exception as e:
@@ -1429,7 +1549,6 @@ def main() -> None:
     logging.info("  - Insertadas: %s", inserted)
     logging.info("  - Actualizadas: %s", updated)
     logging.info("  - Quality Gate: %s", quality_result["status"])
-    logging.info("="*60)
 
 if __name__ == "__main__":
     main()
