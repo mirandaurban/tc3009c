@@ -1,7 +1,7 @@
 {
   "seed": 752391,
   "n_patients": 8000,
-  "n_appointments": 61200,
+  "n_appointments": 63081,
   "defect_counts": {
     "D1": 1200,
     "D2": 600,
@@ -11,5 +11,9 @@
     "D6": 2448,
     "D7": 306
   },
-  "timestamp": "2026-09-06T16:53:25.286901"
+  "timestamp": "2026-09-07T20:41:40.690888",
+  "last_append": {
+    "new_appointments": 2500,
+    "timestamp": "2026-09-07T20:41:40.690901"
+  }
 }

@@ -139,18 +139,20 @@ def write_watermark(path: Path, value: str) -> None:
         json.dumps(current_data, indent=2),
         encoding="utf-8"
     )
+
+
 """
 EXTRACT: Extracción incremental de cada fuente
 """
 def extract(config: ETLConfig, watermark: str) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, dict]:
-    # 1. PATIENTS TABLE
+    # PATIENTS TABLE
     with sqlite3.connect(config.database_path) as conn:
         patients_df = pd.read_sql(
             "SELECT * FROM patients",
             conn
         )
     
-    # 2. APPOINTMENTS
+    # APPOINTMENTS
     with sqlite3.connect(config.database_path) as conn:
         appointments_df = pd.read_sql(
             """
@@ -161,10 +163,10 @@ def extract(config: ETLConfig, watermark: str) -> tuple[pd.DataFrame, pd.DataFra
             params={"watermark": watermark}
         )
     
-    # 3. TARIFAS
+    # TARIFAS
     tarifas_df = pd.read_csv(config.tarifas_path)
     
-    # 4. CLINICAS
+    # CLINICAS
     with config.catalogo_path.open(encoding="utf-8") as file:
         catalogo_clinicas = json.load(file)
     
@@ -181,6 +183,7 @@ def extract(config: ETLConfig, watermark: str) -> tuple[pd.DataFrame, pd.DataFra
     
     return patients_df, appointments_df, tarifas_df, catalogo_clinicas
 
+
 """
 STAGE: Con fines de trazabilidad, añadir evidencia de origen e identificadores
 """
@@ -188,7 +191,8 @@ def stage(
     patients_df: pd.DataFrame, 
     appointments_df: pd.DataFrame, 
     tarifas_df: pd.DataFrame,
-    batch_id: str
+    batch_id: str,
+    run_id: str
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     ingested_at = pd.Timestamp.now("UTC").isoformat()
     
@@ -197,19 +201,22 @@ def stage(
     patients_df["source_system"] = "sqlite:patients"
     patients_df["batch_id"] = batch_id
     patients_df["ingested_at"] = ingested_at
+    patients_df["run_id"] = run_id
     
     # Citas
     appointments_df = appointments_df.copy()
     appointments_df["source_system"] = "sqlite:appointments"
     appointments_df["batch_id"] = batch_id
     appointments_df["ingested_at"] = ingested_at
-    
+    appointments_df["run_id"] = run_id
+
     # Tarifas
     tarifas_df = tarifas_df.copy()
     tarifas_df["source_system"] = "csv:tarifas_especialidad"
     tarifas_df["batch_id"] = batch_id
     tarifas_df["ingested_at"] = ingested_at
-    
+    tarifas_df["run_id"] = run_id
+
     logging.info(
         "STAGE: batch_id=%s asignado a %s pacientes, %s citas, %s tarifas",
         batch_id,
@@ -219,6 +226,7 @@ def stage(
     )
     
     return patients_df, appointments_df, tarifas_df
+
 
 """
 VALIDATE: Verificar que los datos cumplan con el contrato de datos.
@@ -264,7 +272,7 @@ def homologar_clinic_code(valor, catalogo: dict) -> str:
     if not valor_limpio:
         return None
     
-    # Quitar comillas y espacios extras (para D6)
+    # Quitar comillas y espacios extras
     valor_limpio = valor_limpio.replace("'", "").strip()
     
     # Buscar en el catálogo
@@ -279,6 +287,7 @@ def homologar_clinic_code(valor, catalogo: dict) -> str:
     
     return None
 
+
 """
 VALIDATE: Verificar que los datos cumplan con el contrato de datos.
 Aquí se define si siguen el proceso o van a cuarentena.
@@ -290,28 +299,21 @@ def validate(
     config: ETLConfig,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
 
-    # ======================================================================
-    # 0. HOMOLOGAR ESPECIALIDADES Y CLÍNICAS ANTES DE VALIDAR
-    # ======================================================================
+    # Homologaciones
     catalogo = load_catalogo(config.catalogo_path)
     alias_map = catalogo.get("especialidad_aliases", {})
     
-    # Homologar appointments
     a = appointments_df.copy()
     
-    # Homologar specialty
     a["specialty_homologada"] = a["specialty"].apply(
         lambda x: homologar_specialty(x, alias_map)
     )
     
-    # Homologar clinic_code
     a["clinic_code_homologado"] = a["clinic_code"].apply(
         lambda x: homologar_clinic_code(x, catalogo)
     )
     
-    # ======================================================================
-    # 1. VALIDAR PACIENTES
-    # ======================================================================
+    # Validaciones
     p = patients_df.copy()
     p_reasons = [] # Justificaciones de rechazo
     for idx, row in p.iterrows():
@@ -374,10 +376,7 @@ def validate(
     quarantined_patients = p[p["rejection_reason"] != ""].copy()
     valid_patients = p[p["rejection_reason"] == ""].copy()
 
-    
-    # ======================================================================
-    # 2. VALIDAR CITAS (usando valores homologados)
-    # ======================================================================
+
     a_reasons = [] # Justificaciones de rechazo
     for idx, row in a.iterrows():
         reasons = []
@@ -408,14 +407,13 @@ def validate(
         else:
             reasons.append("clinic_code_null")
         
-        # Contract: specialty - USAR VALOR HOMOLOGADO
+        # Contract: specialty
         if row.get("specialty_homologada") is not None:
             if row["specialty_homologada"] in VALID_SPECIALTIES:
                 # Guardar el valor homologado para usarlo después
                 row["specialty_clean"] = row["specialty_homologada"]
             else:
-                reasons.append("specialty_invalid")
-        # Si es null, es aceptable (specialty es nullable en el contrato)
+                reasons.append("specialty_invalid") # Si es null, es aceptable (specialty es nullable en el contrato)
         
         # Contract: scheduled_at con formato y rangos válidos
         if not pd.isna(row.get("scheduled_at")):
@@ -474,7 +472,7 @@ def validate(
             except:
                 pass
         
-        # NUEVA REGLA: scheduled_at debe ser >= registered_at del paciente (D7)
+        # Scheduled_at debe ser >= registered_at del paciente
         if not pd.isna(row.get("scheduled_at")) and not pd.isna(row.get("patient_id")):
             try:
                 # Buscar paciente en valid_patients
@@ -494,9 +492,6 @@ def validate(
     valid_appointments = a[a["rejection_reason"] == ""].copy()
 
     
-    # ======================================================================
-    # 3. VALIDAR TARIFAS
-    # ======================================================================
     t = tarifas_df.copy()
     t_reasons = []
     
@@ -549,12 +544,10 @@ def validate(
     quarantined_tarifas = t[t["rejection_reason"] != ""].copy()
     valid_tarifas = t[t["rejection_reason"] == ""].copy()
     
-    # ======================================================================
-    # 4. CUARENTENA
-    # ======================================================================
+    # Cuarentena
+
     quarantine_records = []
     
-    # Pacientes en cuarentena
     for _, row in quarantined_patients.iterrows():
         quarantine_records.append({
             "source": "patients",
@@ -564,7 +557,6 @@ def validate(
             "ingested_at": row.get("ingested_at", datetime.now().isoformat())
         })
     
-    # Citas en cuarentena
     for _, row in quarantined_appointments.iterrows():
         quarantine_records.append({
             "source": "appointments",
@@ -574,7 +566,6 @@ def validate(
             "ingested_at": row.get("ingested_at", datetime.now().isoformat())
         })
     
-    # Tarifas en cuarentena
     for _, row in quarantined_tarifas.iterrows():
         quarantine_records.append({
             "source": "tarifas",
@@ -594,6 +585,7 @@ def validate(
     
     return valid_patients, valid_appointments, valid_tarifas, quarantine_df
 
+
 """
 TRANSFORM: Homologación y estandarización de variables para uniformidad y determinismo
 """
@@ -604,7 +596,7 @@ def transform(
     config: ETLConfig,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
 
-    # Patients (igual)
+    # Patients
     patients = valid_patients.copy()
     patients["city"] = patients["city"].str.strip().str.title()
     patients["insurance"] = patients["insurance"].str.strip().str.lower()
@@ -614,32 +606,24 @@ def transform(
     
     logging.info("TRANSFORM pacientes: %s transformados", len(patients))
     
-    # ======================================================================
     # APPOINTMENTS
-    # ======================================================================
     appointments = valid_appointments.copy()
     
-    # Limpiar strings
     appointments["clinic_code"] = appointments["clinic_code"].str.strip().str.upper()
     appointments["status"] = appointments["status"].str.strip().str.lower()
     appointments["payment_method"] = appointments["payment_method"].str.strip().str.lower()
     
-    # USAR VALORES YA HOMOLOGADOS
     if "clinic_code_clean" not in appointments.columns:
         appointments["clinic_code_clean"] = appointments["clinic_code"]
     if "specialty_clean" not in appointments.columns:
         appointments["specialty_clean"] = appointments["specialty"]
     
-    # Limpiar amount_charged
     if "amount_charged" in appointments.columns:
         appointments["amount_charged_clean"] = appointments["amount_charged"].fillna(0)
         appointments["amount_charged_clean"] = appointments["amount_charged_clean"].clip(lower=0)
     else:
         appointments["amount_charged_clean"] = 0
     
-    # ======================================================================
-    # CONVERTIR FECHAS CON FORMATO MIXTO
-    # ======================================================================
     def parse_datetime_mixed(valor):
         """Convierte fechas en múltiples formatos a datetime"""
         if pd.isna(valor) or valor is None:
@@ -665,17 +649,14 @@ def transform(
             except (ValueError, TypeError):
                 continue
         
-        # Último intento: dejar que pandas infiera
         try:
             return pd.to_datetime(valor_str, format='mixed')
         except:
             return pd.NaT
     
-    # Aplicar conversión
     appointments["scheduled_at"] = appointments["scheduled_at"].apply(parse_datetime_mixed)
     appointments["created_at"] = appointments["created_at"].apply(parse_datetime_mixed)
     
-    # Verificar conversiones fallidas
     scheduled_failed = appointments["scheduled_at"].isna().sum()
     created_failed = appointments["created_at"].isna().sum()
     if scheduled_failed > 0:
@@ -683,7 +664,6 @@ def transform(
     if created_failed > 0:
         logging.warning("TRANSFORM: %s created_at no pudieron convertirse", created_failed)
     
-    # Variables derivadas (solo para filas con fecha válida)
     appointments["scheduled_date"] = None
     appointments["scheduled_hour"] = None
     appointments["scheduled_day_of_week"] = None
@@ -701,16 +681,13 @@ def transform(
             (appointments.loc[mask, "scheduled_hour"] <= 13)
         ).astype(int)
     
-    # Duración
     appointments["duration_hours"] = appointments["duration_min"] / 60.0
     appointments["is_no_show"] = (appointments["status"] == "no_show").astype(int)
     appointments["patient_age_at_visit"] = None
     
     logging.info("TRANSFORM citas: %s transformadas", len(appointments))
     
-    # ======================================================================
     # TARIFAS
-    # ======================================================================
     tarifas = valid_tarifas.copy()
     tarifas["clinic_code"] = tarifas["clinic_code"].str.strip().str.upper()
     tarifas["specialty"] = tarifas["specialty"].str.strip().str.title()
@@ -720,6 +697,39 @@ def transform(
     logging.info("TRANSFORM tarifas: %s transformadas", len(tarifas))
     
     return patients, appointments, tarifas
+
+def deduplicar_citas(appointments: pd.DataFrame) -> pd.DataFrame:
+
+    df = appointments.copy()
+    original_len = len(df)
+    
+    # Duplicados exactos (mismo appointment_id)
+    exact_duplicates = df[df.duplicated(subset=['appointment_id'], keep=False)]
+    if not exact_duplicates.empty:
+        logging.warning(f"DEDUP: {len(exact_duplicates)} duplicados exactos encontrados")
+        df = df.drop_duplicates(subset=['appointment_id'], keep='first')
+    
+    # Casi-duplicados (misma combinación de campos)
+    dup_cols = ['patient_id', 'clinic_code', 'specialty', 'scheduled_at', 'duration_min']
+    
+    if all(col in df.columns for col in dup_cols):
+        near_duplicates = df[df.duplicated(subset=dup_cols, keep=False)]
+        if not near_duplicates.empty:
+            logging.warning(f"DEDUP: {len(near_duplicates)} casi-duplicados encontrados")
+            # Marcar como duplicados y eliminar (mantener solo el primero)
+            df['is_duplicate'] = df.duplicated(subset=dup_cols, keep='first')
+            df = df[~df['is_duplicate']].copy()
+            if 'is_duplicate' in df.columns:
+                df = df.drop(columns=['is_duplicate'])
+    
+    # Log de resultados
+    removed = original_len - len(df)
+    if removed > 0:
+        logging.info(f"DEDUP: {original_len} -> {len(df)} citas ({removed} eliminadas)")
+    else:
+        logging.info(f"DEDUP: {len(df)} citas, sin duplicados")
+    
+    return df
 
 """
 INTEGRATE: Combinación de todas las fuentes respetando cardinalidad
@@ -834,13 +844,13 @@ def integrate(
     
     return fact, reconciliation
 
+
 """
 BUILD CURATED DATABASE: Procesar datos para crear la base de datos destino
 """
 def build_curated_database(config: ETLConfig) -> None:
     output_db_path = config.output_database_path if hasattr(config, 'output_database_path') else config.database_path
     
-    # Asegurar que el directorio existe
     output_db_path.parent.mkdir(parents=True, exist_ok=True)
         
     with sqlite3.connect(output_db_path) as conn:
@@ -875,6 +885,7 @@ def build_curated_database(config: ETLConfig) -> None:
                 is_peak_hour INTEGER,
                 duration_hours REAL,
                 is_no_show INTEGER,
+                run_id TEXT,
                 batch_id TEXT,
                 source_system TEXT,
                 ingested_at TEXT,
@@ -886,6 +897,7 @@ def build_curated_database(config: ETLConfig) -> None:
         conn.execute(f"""
             CREATE TABLE IF NOT EXISTS {config.quarantine_table} (
                 source TEXT,
+                run_id TEXT,
                 batch_id TEXT,
                 record_id TEXT,
                 reject_reason TEXT,
@@ -949,7 +961,6 @@ def build_curated_database(config: ETLConfig) -> None:
         
         logging.info("BUILD: Tablas creadas/verificadas: %s", [t[0] for t in tables])
     
-
 
 """
 QUALITY GATE: Verificar la calidad de los datos antes de cargarlos
@@ -1040,6 +1051,7 @@ def quality_gate(
         "metrics": metrics, 
         "failures": failures
     }
+
 
 """
 LOAD: Subir los datos procesados (y que no se enucentren ya en la BD con UPSERT)
@@ -1198,6 +1210,7 @@ def load(
     
     return inserted, updated
 
+
 """
 AUDIT: Guarda la evidencia del proceso completo de ETL en la tabla de auditoría
 """
@@ -1215,7 +1228,6 @@ def audit(
     output_db_path = config.output_database_path if hasattr(config, 'output_database_path') else config.database_path
     
     with sqlite3.connect(output_db_path) as conn:
-        # Crear tabla si no existe
         conn.execute(f"""
             CREATE TABLE IF NOT EXISTS {config.audit_table} (
                 run_id TEXT PRIMARY KEY,
@@ -1234,7 +1246,6 @@ def audit(
             )
         """)
         
-        # Insertar o reemplazar registro
         with conn:
             conn.execute(
                 f"""
@@ -1282,7 +1293,7 @@ def main() -> None:
     logging.info("run_id=%s batch_id=%s", run_id, batch_id)
     logging.info("watermark_before=%s", watermark_before)
     
-    # BUILD: Crear base de datos destino
+    # BUILD
     try:
         build_curated_database(config)
     except Exception as e:
@@ -1338,7 +1349,7 @@ def main() -> None:
     # STAGE
     try:
         patients_staged, appointments_staged, tarifas_staged = stage(
-            patients_df, appointments_df, tarifas_df, batch_id
+            patients_df, appointments_df, tarifas_df, batch_id, run_id
         )
     except Exception as e:
         error_message = f"STAGE falló: {str(e)}"
@@ -1401,6 +1412,7 @@ def main() -> None:
         transformed_patients, transformed_appointments, transformed_tarifas = transform(
             valid_patients, valid_appointments, valid_tarifas, config
         )
+        transformed_appointments = deduplicar_citas(transformed_appointments)
     except Exception as e:
         error_message = f"TRANSFORM falló: {str(e)}"
         logging.error(error_message)
@@ -1536,7 +1548,6 @@ def main() -> None:
         None
     )
     
-
     # RESUMEN
     logging.info("="*60)
     logging.info("ETL COMPLETO finalizado exitosamente")
