@@ -1,2 +1,4 @@
 *.csv filter=lfs diff=lfs merge=lfs -text
 *.parquet filter=lfs diff=lfs merge=lfs -text
+Desarrollo[[:space:]]de[[:space:]]Software/Examen/data/volume_1M/clinica_curated.db filter=lfs diff=lfs merge=lfs -text
+Desarrollo[[:space:]]de[[:space:]]Software/Examen/data/volume_4M/clinica_curated.db filter=lfs diff=lfs merge=lfs -text

@@ -7,6 +7,8 @@
 -- según este criterio, básicamente, permite identificar qué especialidades generan más ingresos y
 -- cuáles tienen mayor ticket promedio. 
 
+-- Para ejecutar: sqlite3 data/clinica_curated.db < sql/consultas.sql
+
 SELECT 
     specialty_clean AS especialidad,
     COUNT(*) AS total_citas,
