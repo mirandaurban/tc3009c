@@ -304,6 +304,8 @@ def validate(
     alias_map = catalogo.get("especialidad_aliases", {})
     
     a = appointments_df.copy()
+    a["specialty_clean"] = None
+    a["clinic_code_clean"] = None
     
     a["specialty_homologada"] = a["specialty"].apply(
         lambda x: homologar_specialty(x, alias_map)
@@ -400,20 +402,18 @@ def validate(
         # Contract: clinic_code - USAR VALOR HOMOLOGADO
         if row.get("clinic_code_homologado") is not None:
             if row["clinic_code_homologado"] in VALID_CLINIC_CODES:
-                # Guardar el valor homologado para usarlo después
-                row["clinic_code_clean"] = row["clinic_code_homologado"]
+                a.at[idx, "clinic_code_clean"] = row["clinic_code_homologado"]
             else:
                 reasons.append("clinic_code_invalid")
         else:
             reasons.append("clinic_code_null")
         
-        # Contract: specialty
+        # Contract: specialty - SOLO ASIGNAR SI SE HOMOLOGA
         if row.get("specialty_homologada") is not None:
             if row["specialty_homologada"] in VALID_SPECIALTIES:
-                # Guardar el valor homologado para usarlo después
-                row["specialty_clean"] = row["specialty_homologada"]
+                a.at[idx, "specialty_clean"] = row["specialty_homologada"]
             else:
-                reasons.append("specialty_invalid") # Si es null, es aceptable (specialty es nullable en el contrato)
+                reasons.append("specialty_invalid")
         
         # Contract: scheduled_at con formato y rangos válidos
         if not pd.isna(row.get("scheduled_at")):
@@ -608,11 +608,11 @@ def transform(
     
     # APPOINTMENTS
     appointments = valid_appointments.copy()
-    
+
     appointments["clinic_code"] = appointments["clinic_code"].str.strip().str.upper()
     appointments["status"] = appointments["status"].str.strip().str.lower()
     appointments["payment_method"] = appointments["payment_method"].str.strip().str.lower()
-    
+
     if "clinic_code_clean" not in appointments.columns:
         appointments["clinic_code_clean"] = appointments["clinic_code"]
     if "specialty_clean" not in appointments.columns:

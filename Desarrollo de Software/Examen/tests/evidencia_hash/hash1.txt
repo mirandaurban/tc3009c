@@ -1,0 +1,4 @@
+815fb829b652241a4bcc999505dc8eaae9c0ec1b  data/clinica.db
+696a6073882ab2bb8927dfe7bb4529dc01ca2330  data/tarifas_especialidad.csv
+f3ed10accaa3f56c2d0e3693d9e19de2a0935478  data/catalogo_clinicas.json
+84e596db896bc05c331e926dbcbb59e830e831b7  data/data_profile.json
