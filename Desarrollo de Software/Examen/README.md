@@ -207,16 +207,18 @@ El pipeline sigue el flujo:
 
 **Interpretación:** Dermatología es la especialidad que genera el mayor ingreso total ($9.2M), seguida de Traumatología ($8.9M). Sin embargo, Oftalmología tiene el ticket promedio más alto ($1,354.84), lo que indica que aunque tiene menos volumen (2,891 citas), es un servicio de alta complejidad y alto valor. En contraste, Pediatría tiene el ticket promedio más bajo ($752.83) y un volumen medio (3,301 citas), lo que sugiere que es un servicio de alta rotación pero bajo margen. Las 703 citas sin especialidad representan un área de oportunidad para mejorar la captura de datos en el origen.
 
-### 2. Tasa de no-show por sucursal (superan promedio)
+Sí, la información coincide con la interpretación. Sin embargo, hay una ligera mejora en la redacción. Aquí está la versión corregida:
 
-**Datos actualizados:**
+---
+
+### 2. Tasa de no-show por sucursal (superan promedio)
 
 | Sucursal | Total Citas | No-Show | Tasa   | Promedio General | Diferencia |
 | -------- | ----------- | ------- | ------ | ---------------- | ---------- |
 | CL05     | 5,336       | 749     | 14.04% | 12.89%           | +1.15%     |
 | CL03     | 10,395      | 1,383   | 13.30% | 12.89%           | +0.41%     |
 
-**Interpretación:** CL05 (14.04%) y CL03 (13.30%) superan el promedio general de no-show (12.89%). CL05 es la sucursal con mayor tasa de ausentismo, lo que puede indicar problemas de accesibilidad, falta de recordatorios o sobre-agendamiento. CL03, a pesar de tener el mayor volumen de citas (10,395), también presenta una tasa ligeramente superior al promedio. Se recomienda implementar estrategias de recordatorio (SMS, llamadas) en CL05 y monitorear la evolución de CL03. El resto de las sucursales se encuentran por debajo del promedio, lo que sugiere que el problema está focalizado.
+**Interpretación:** CL05 presenta la tasa de no-show más alta (14.04%), superando el promedio general en 1.15 puntos porcentuales. Esto puede indicar problemas de accesibilidad, falta de recordatorios efectivos o sobre-agendamiento en esta sucursal. CL03, a pesar de tener el mayor volumen de citas (10,395), también supera el promedio general (13.30% vs 12.89%). Se recomienda implementar estrategias de recordatorio (SMS, recordatorios telefónicos) en CL05 como medida prioritaria y monitorear la evolución de CL03. El resto de las sucursales se encuentran por debajo del promedio, lo que sugiere que el problema está focalizado en estas dos ubicaciones.
 
 ### 3. Ingreso mensual por sucursal y variación
 
@@ -364,6 +366,35 @@ python scripts/verify_etl.py
 # Revisar logs
 tail -100 data/etl.log
 ```
+
+---
+
+## Información generada a partir de automatizaciones
+
+Con el fin de eficientar las tareas de análisis, parte de las evidencias se generan automáticamente con código. Esto con el fin de que el tiempo invertido en esta sección se centre precisamente en el análisis, no en la generación de la información en la que este se basa.
+
+En el caso del diccionario de datos, la información sobre los datos se crea al momento de la generación de datos con el fin de que la información reportada sea consistente con la que se ha producido. Se puede ver en:
+
+- [Diccionario de Datos](docs/data_dictionary.md)
+
+Para confirmar que el funcionamiento de `append_new_batch.py` fuera correcto, se obtuvieron los hash de estos procesos. Los resultados pueden observarse en los siguientes archivos donde se aprecia que el hash es el mismo (a excepción del perfil porque este cambia en cada iteración):
+
+- [Hash de ejecución 1](tests/evidencia_hash/hash1.txt)
+- [Hash de ejecución 2](tests/evidencia_hash/hash2.txt)
+
+Al ejecutar el archivo de `src/run_queries.py` se genera de forma automática un reporte (en JSON y Markdown) con las evidencias obtenidas, paso fundamental para el análisis realizado en la sección de _Análisis de Resultados de Consultas Analíticas_. Véase los archivos para un mejor entendimiento de esa sección:
+
+- [JSON de resultados de consultas](docs/resultados_consultas.json)
+- [Markdown de resultados de consultas](docs/resultados_consultas.md)
+
+En el caso del benchmark, al ejecutar el código, los resultados de este proceso se generan y guardan automáticamente. Los resultados obtenidos se pueden ver en:
+
+- [JSON de resultados del benchmark](data/benchmark_results.json)
+- [Gráfico de los resultados del benchmark](data/benchmark_results.png)
+
+Extra: La ejecución de prueba realizada para la demostración del examen puede verse en el siguiente archivo:
+
+- [Evidencia terminal](docs/evidencia_terminal.txt)
 
 ---
 

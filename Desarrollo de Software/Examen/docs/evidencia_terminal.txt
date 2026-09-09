@@ -1,0 +1,135 @@
+mirandaurbansolano@MacBook-Pro-de-Miranda-2 Examen %  source /Users/mirandaurbansolano/GitHub/tc3009c/.venv/bin/activate
+((.venv) ) mirandaurbansolano@MacBook-Pro-de-Miranda-2 Examen % cat config.json | grep seed
+  "seed": 752391,
+((.venv) ) mirandaurbansolano@MacBook-Pro-de-Miranda-2 Examen % ./run_all.sh
+
+=====================================================
+Examen: De Laboratorio a Pipeline de Datos Productivo
+=====================================================
+Fecha: Wed Sep  9 12:01:54 CST 2026
+
+>>> 0) Instalando dependencias (pandas)
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: pip install --upgrade pip
+
+>>> 1) Sembrando base fuente (data/vehicles.db)
+Generando datos con seed: 752391
+Pacientes: 8000, Citas: 60000
+--------------------------------------------------
+1. Construyendo catálogo...
+2. Construyendo tarifas...
+3. Construyendo pacientes...
+   8000 pacientes generados
+4. Calculando pesos para distribución no uniforme...
+5. Construyendo citas...
+   60000 citas generadas
+6. Inyectando defectos...
+   Defectos inyectados: 10581
+7. Creando base de datos...
+8. Creando perfil de datos...
+
+=== Checks de Aceptación ===
+✓ patients = 8000 filas y patient_id único
+✓ appointments ≥ 60000 filas (61200 filas)
+Top 20%: 61.5%
+Top 30%: 73.4%
+Top 50%: 87.8%
+✓ % de citas del top 30% de pacientes: 73.4% (65-75%)
+
+Conteo de defectos:
+  ✓ D1: 1.96% (esperado 2.00%)
+  ✓ D2: 0.98% (esperado 1.00%)
+  ✓ D3: 2.94% (esperado 3.00%)
+  ✓ D4: 1.96% (esperado 2.00%)
+  ✓ D5: 4.95% (esperado 5.00%)
+  ✓ D6: 4.00% (esperado 4.00%)
+  ✓ D7: 0.50% (esperado 0.50%)
+✓ CSV tiene exactamente 40 filas y ninguna tarifa nula
+✓ Todo clinic_code del catálogo aparece en appointments
+
+✓ Todos los checks de aceptación se aprobaron
+9. Generando diccionario de datos...
+   Diccionario de datos generado en /Users/mirandaurbansolano/GitHub/tc3009c/Desarrollo de Software/Examen/docs/data_dictionary.md
+
+==================================================
+¡Generación completada exitosamente!
+Archivos generados:
+  - /Users/mirandaurbansolano/GitHub/tc3009c/Desarrollo de Software/Examen/data/clinica.db
+  - /Users/mirandaurbansolano/GitHub/tc3009c/Desarrollo de Software/Examen/data/tarifas_especialidad.csv
+  - /Users/mirandaurbansolano/GitHub/tc3009c/Desarrollo de Software/Examen/data/catalogo_clinicas.json
+  - /Users/mirandaurbansolano/GitHub/tc3009c/Desarrollo de Software/Examen/data/data_profile.json
+  - /Users/mirandaurbansolano/GitHub/tc3009c/Desarrollo de Software/Examen/docs/data_dictionary.md
+
+>>> 2) Corriendo pipeline de ETL
+Generando datos con seed: 752391
+Pacientes: 8000, Citas: 60000
+--------------------------------------------------
+1. Construyendo catálogo...
+2. Construyendo tarifas...
+3. Construyendo pacientes...
+   8000 pacientes generados
+4. Calculando pesos para distribución no uniforme...
+5. Construyendo citas...
+   60000 citas generadas
+6. Inyectando defectos...
+   Defectos inyectados: 10581
+7. Creando base de datos...
+8. Creando perfil de datos...
+
+=== Checks de Aceptación ===
+✓ patients = 8000 filas y patient_id único
+✓ appointments ≥ 60000 filas (61200 filas)
+Top 20%: 61.5%
+Top 30%: 73.4%
+Top 50%: 87.8%
+✓ % de citas del top 30% de pacientes: 73.4% (65-75%)
+
+Conteo de defectos:
+  ✓ D1: 1.96% (esperado 2.00%)
+  ✓ D2: 0.98% (esperado 1.00%)
+  ✓ D3: 2.94% (esperado 3.00%)
+  ✓ D4: 1.96% (esperado 2.00%)
+  ✓ D5: 4.95% (esperado 5.00%)
+  ✓ D6: 4.00% (esperado 4.00%)
+  ✓ D7: 0.50% (esperado 0.50%)
+✓ CSV tiene exactamente 40 filas y ninguna tarifa nula
+✓ Todo clinic_code del catálogo aparece en appointments
+
+✓ Todos los checks de aceptación se aprobaron
+9. Generando diccionario de datos...
+   Diccionario de datos generado en /Users/mirandaurbansolano/GitHub/tc3009c/Desarrollo de Software/Examen/docs/data_dictionary.md
+
+==================================================
+¡Generación completada exitosamente!
+Archivos generados:
+  - /Users/mirandaurbansolano/GitHub/tc3009c/Desarrollo de Software/Examen/data/clinica.db
+  - /Users/mirandaurbansolano/GitHub/tc3009c/Desarrollo de Software/Examen/data/tarifas_especialidad.csv
+  - /Users/mirandaurbansolano/GitHub/tc3009c/Desarrollo de Software/Examen/data/catalogo_clinicas.json
+  - /Users/mirandaurbansolano/GitHub/tc3009c/Desarrollo de Software/Examen/data/data_profile.json
+  - /Users/mirandaurbansolano/GitHub/tc3009c/Desarrollo de Software/Examen/docs/data_dictionary.md
+((.venv) ) mirandaurbansolano@MacBook-Pro-de-Miranda-2 Examen % PYTHONPATH=src python -m pytest tests/ -v
+=========================================================================================== test session starts ===========================================================================================
+platform darwin -- Python 3.12.10, pytest-7.4.4, pluggy-1.6.0 -- /Users/mirandaurbansolano/GitHub/tc3009c/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/mirandaurbansolano/GitHub/tc3009c/Desarrollo de Software/Examen
+plugins: anyio-4.14.2
+collected 15 items                                                                                                                                                                                        
+
+tests/test_contracts.py::TestContracts::test_patient_id_regex PASSED                                                                                                                                [  6%]
+tests/test_contracts.py::TestContracts::test_appointment_id_regex PASSED                                                                                                                            [ 13%]
+tests/test_contracts.py::TestContracts::test_valid_specialties PASSED                                                                                                                               [ 20%]
+tests/test_contracts.py::TestContracts::test_valid_clinic_codes PASSED                                                                                                                              [ 26%]
+tests/test_contracts.py::TestContracts::test_patients_contract_structure PASSED                                                                                                                     [ 33%]
+tests/test_contracts.py::TestContracts::test_appointments_contract_structure PASSED                                                                                                                 [ 40%]
+tests/test_contracts.py::TestContracts::test_tarifas_contract_structure PASSED                                                                                                                      [ 46%]
+tests/test_contracts.py::TestContracts::test_column_nullability PASSED                                                                                                                              [ 53%]
+tests/test_etl.py::TestETL::test_patient_age_at_visit PASSED                                                                                                                                        [ 60%]
+tests/test_etl.py::TestETL::test_negative_amount_rejected PASSED                                                                                                                                    [ 66%]
+tests/test_etl.py::TestETL::test_quality_gate_threshold PASSED                                                                                                                                      [ 73%]
+tests/test_etl.py::TestETL::test_idempotency PASSED                                                                                                                                                 [ 80%]
+tests/test_etl.py::TestETL::test_homologacion_specialty PASSED                                                                                                                                      [ 86%]
+tests/test_etl.py::TestETL::test_homologacion_clinic_code PASSED                                                                                                                                    [ 93%]
+tests/test_etl.py::TestETL::test_revenue_gap_calculation PASSED                                                                                                                                     [100%]
+
+=========================================================================================== 15 passed in 0.07s ============================================================================================
+((.venv) ) mirandaurbansolano@MacBook-Pro-de-Miranda-2 Examen % 
