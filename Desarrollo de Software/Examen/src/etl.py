@@ -1392,20 +1392,21 @@ def main() -> None:
         raise SystemExit(f"Pipeline detenido: {error_message}")
     
     if valid_appointments.empty:
+    # Diagnóstico: mostrar razones de rechazo de las nuevas citas
+        print("\n=== DIAGNÓSTICO DE REBAJE ===")
+        quarantine_appointments = quarantine[quarantine['source'] == 'appointments']
+        if not quarantine_appointments.empty:
+            from collections import Counter
+            reasons = Counter()
+            for r in quarantine_appointments['reject_reason']:
+                reasons.update(r.split(';'))
+            print("Motivos de rechazo (nuevas citas):", reasons.most_common())
+            
+            # Mostrar una muestra de las citas rechazadas
+            print("\nMuestra de citas rechazadas:")
+            print(quarantine_appointments[['record_id', 'reject_reason']].head(3))
+        
         logging.warning("Todas las citas del batch fueron a cuarentena: no hay nada que cargar")
-        finished_at = datetime.now().isoformat()
-        audit(
-            config, run_id, started_at, finished_at,
-            watermark_before, watermark_before,
-            {"source_appointments": len(appointments_df), 
-             "valid_appointments": 0, 
-             "quarantined_appointments": len(quarantine), 
-             "inserted": 0, "updated": 0,
-             "quality_status": "FAIL"},
-            "SUCCESS_EMPTY",
-            None
-        )
-        return
 
     # TRANSFORM
     try:

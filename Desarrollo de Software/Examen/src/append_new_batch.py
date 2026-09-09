@@ -107,7 +107,7 @@ def generate_new_appointments(patient_ids, existing_appointment_ids, tarifas, ca
         scheduled_at = scheduled_at - timedelta(hours=hours_offset)
         scheduled_at = scheduled_at - timedelta(minutes=minutes_offset)
         
-        duration_min = rng.choice([15, 20, 30, 45, 60], p=[0.30, 0.25, 0.25, 0.15, 0.05])
+        duration_min = int(rng.choice([15, 20, 30, 45, 60], p=[0.30, 0.25, 0.25, 0.15, 0.05]))
         
         status = rng.choice(['completada', 'no_show', 'cancelada'], p=[0.78, 0.13, 0.09])
         
