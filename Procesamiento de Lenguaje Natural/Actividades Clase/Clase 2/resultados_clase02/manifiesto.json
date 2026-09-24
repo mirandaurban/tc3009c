@@ -1,0 +1,10 @@
+{
+  "python": "3.12.10",
+  "pandas": "3.0.5",
+  "spacy": "3.8.16",
+  "nltk": "3.10.3",
+  "modelo_es": "es_core_news_sm",
+  "modelo_es_version": "3.8.0",
+  "politica": "NFC y espacios; conservar original, negación, acentos y split",
+  "sha256": "724c86d3ae3cf7fd4d1e1fd3cbadc2f6b4bf036b762e1fd78a54365ac50e6357"
+}
