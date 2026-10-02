@@ -1,0 +1,9 @@
+{
+  "python": "3.12.10",
+  "pandas": "3.0.5",
+  "spacy": "3.8.16",
+  "semilla": 42,
+  "politica": "NFC y espacios; conservar original, negación, acentos y split",
+  "fuente": "corpus_auditoria_v2.csv",
+  "sha256": "b76a45bf8b15cbb8d7794e581eb2bb34e89eeca8fcf3d590dde9e08741d2eecc"
+}
