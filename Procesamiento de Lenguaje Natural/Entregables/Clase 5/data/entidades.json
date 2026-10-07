@@ -1,0 +1,866 @@
+[
+  {
+    "id": "E00_0",
+    "family": "N00",
+    "split": "train",
+    "text": "La aplicación AulaPro falla; el folio es INC-1001.",
+    "entities": [
+      [
+        14,
+        21,
+        "PRODUCTO"
+      ],
+      [
+        41,
+        49,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E00_1",
+    "family": "N00",
+    "split": "train",
+    "text": "Favor de revisar INC-1001: no abre AulaPro.",
+    "entities": [
+      [
+        17,
+        25,
+        "FOLIO"
+      ],
+      [
+        35,
+        42,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E00_2",
+    "family": "N00",
+    "split": "train",
+    "text": "Con AulaPro no puedo guardar. Seguimiento: INC-1001.",
+    "entities": [
+      [
+        4,
+        11,
+        "PRODUCTO"
+      ],
+      [
+        43,
+        51,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E00_3",
+    "family": "N00",
+    "split": "train",
+    "text": "Mi solicitud INC-1001 corresponde a AulaPro.",
+    "entities": [
+      [
+        13,
+        21,
+        "FOLIO"
+      ],
+      [
+        36,
+        43,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E01_0",
+    "family": "N01",
+    "split": "train",
+    "text": "La aplicación MesaApp falla; el folio es INC-1002.",
+    "entities": [
+      [
+        14,
+        21,
+        "PRODUCTO"
+      ],
+      [
+        41,
+        49,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E01_1",
+    "family": "N01",
+    "split": "train",
+    "text": "Favor de revisar INC-1002: no abre MesaApp.",
+    "entities": [
+      [
+        17,
+        25,
+        "FOLIO"
+      ],
+      [
+        35,
+        42,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E01_2",
+    "family": "N01",
+    "split": "train",
+    "text": "Con MesaApp no puedo guardar. Seguimiento: INC-1002.",
+    "entities": [
+      [
+        4,
+        11,
+        "PRODUCTO"
+      ],
+      [
+        43,
+        51,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E01_3",
+    "family": "N01",
+    "split": "train",
+    "text": "Mi solicitud INC-1002 corresponde a MesaApp.",
+    "entities": [
+      [
+        13,
+        21,
+        "FOLIO"
+      ],
+      [
+        36,
+        43,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E02_0",
+    "family": "N02",
+    "split": "train",
+    "text": "La aplicación NubeTec falla; el folio es INC-1003.",
+    "entities": [
+      [
+        14,
+        21,
+        "PRODUCTO"
+      ],
+      [
+        41,
+        49,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E02_1",
+    "family": "N02",
+    "split": "train",
+    "text": "Favor de revisar INC-1003: no abre NubeTec.",
+    "entities": [
+      [
+        17,
+        25,
+        "FOLIO"
+      ],
+      [
+        35,
+        42,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E02_2",
+    "family": "N02",
+    "split": "train",
+    "text": "Con NubeTec no puedo guardar. Seguimiento: INC-1003.",
+    "entities": [
+      [
+        4,
+        11,
+        "PRODUCTO"
+      ],
+      [
+        43,
+        51,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E02_3",
+    "family": "N02",
+    "split": "train",
+    "text": "Mi solicitud INC-1003 corresponde a NubeTec.",
+    "entities": [
+      [
+        13,
+        21,
+        "FOLIO"
+      ],
+      [
+        36,
+        43,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E03_0",
+    "family": "N03",
+    "split": "train",
+    "text": "La aplicación AulaPro falla; el folio es INC-1004.",
+    "entities": [
+      [
+        14,
+        21,
+        "PRODUCTO"
+      ],
+      [
+        41,
+        49,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E03_1",
+    "family": "N03",
+    "split": "train",
+    "text": "Favor de revisar INC-1004: no abre AulaPro.",
+    "entities": [
+      [
+        17,
+        25,
+        "FOLIO"
+      ],
+      [
+        35,
+        42,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E03_2",
+    "family": "N03",
+    "split": "train",
+    "text": "Con AulaPro no puedo guardar. Seguimiento: INC-1004.",
+    "entities": [
+      [
+        4,
+        11,
+        "PRODUCTO"
+      ],
+      [
+        43,
+        51,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E03_3",
+    "family": "N03",
+    "split": "train",
+    "text": "Mi solicitud INC-1004 corresponde a AulaPro.",
+    "entities": [
+      [
+        13,
+        21,
+        "FOLIO"
+      ],
+      [
+        36,
+        43,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E04_0",
+    "family": "N04",
+    "split": "train",
+    "text": "La aplicación MesaApp falla; el folio es INC-1005.",
+    "entities": [
+      [
+        14,
+        21,
+        "PRODUCTO"
+      ],
+      [
+        41,
+        49,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E04_1",
+    "family": "N04",
+    "split": "train",
+    "text": "Favor de revisar INC-1005: no abre MesaApp.",
+    "entities": [
+      [
+        17,
+        25,
+        "FOLIO"
+      ],
+      [
+        35,
+        42,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E04_2",
+    "family": "N04",
+    "split": "train",
+    "text": "Con MesaApp no puedo guardar. Seguimiento: INC-1005.",
+    "entities": [
+      [
+        4,
+        11,
+        "PRODUCTO"
+      ],
+      [
+        43,
+        51,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E04_3",
+    "family": "N04",
+    "split": "train",
+    "text": "Mi solicitud INC-1005 corresponde a MesaApp.",
+    "entities": [
+      [
+        13,
+        21,
+        "FOLIO"
+      ],
+      [
+        36,
+        43,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E05_0",
+    "family": "N05",
+    "split": "train",
+    "text": "La aplicación NubeTec falla; el folio es INC-1006.",
+    "entities": [
+      [
+        14,
+        21,
+        "PRODUCTO"
+      ],
+      [
+        41,
+        49,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E05_1",
+    "family": "N05",
+    "split": "train",
+    "text": "Favor de revisar INC-1006: no abre NubeTec.",
+    "entities": [
+      [
+        17,
+        25,
+        "FOLIO"
+      ],
+      [
+        35,
+        42,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E05_2",
+    "family": "N05",
+    "split": "train",
+    "text": "Con NubeTec no puedo guardar. Seguimiento: INC-1006.",
+    "entities": [
+      [
+        4,
+        11,
+        "PRODUCTO"
+      ],
+      [
+        43,
+        51,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E05_3",
+    "family": "N05",
+    "split": "train",
+    "text": "Mi solicitud INC-1006 corresponde a NubeTec.",
+    "entities": [
+      [
+        13,
+        21,
+        "FOLIO"
+      ],
+      [
+        36,
+        43,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E06_0",
+    "family": "N06",
+    "split": "train",
+    "text": "La aplicación AulaPro falla; el folio es INC-1007.",
+    "entities": [
+      [
+        14,
+        21,
+        "PRODUCTO"
+      ],
+      [
+        41,
+        49,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E06_1",
+    "family": "N06",
+    "split": "train",
+    "text": "Favor de revisar INC-1007: no abre AulaPro.",
+    "entities": [
+      [
+        17,
+        25,
+        "FOLIO"
+      ],
+      [
+        35,
+        42,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E06_2",
+    "family": "N06",
+    "split": "train",
+    "text": "Con AulaPro no puedo guardar. Seguimiento: INC-1007.",
+    "entities": [
+      [
+        4,
+        11,
+        "PRODUCTO"
+      ],
+      [
+        43,
+        51,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E06_3",
+    "family": "N06",
+    "split": "train",
+    "text": "Mi solicitud INC-1007 corresponde a AulaPro.",
+    "entities": [
+      [
+        13,
+        21,
+        "FOLIO"
+      ],
+      [
+        36,
+        43,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E07_0",
+    "family": "N07",
+    "split": "train",
+    "text": "La aplicación MesaApp falla; el folio es INC-1008.",
+    "entities": [
+      [
+        14,
+        21,
+        "PRODUCTO"
+      ],
+      [
+        41,
+        49,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E07_1",
+    "family": "N07",
+    "split": "train",
+    "text": "Favor de revisar INC-1008: no abre MesaApp.",
+    "entities": [
+      [
+        17,
+        25,
+        "FOLIO"
+      ],
+      [
+        35,
+        42,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E07_2",
+    "family": "N07",
+    "split": "train",
+    "text": "Con MesaApp no puedo guardar. Seguimiento: INC-1008.",
+    "entities": [
+      [
+        4,
+        11,
+        "PRODUCTO"
+      ],
+      [
+        43,
+        51,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E07_3",
+    "family": "N07",
+    "split": "train",
+    "text": "Mi solicitud INC-1008 corresponde a MesaApp.",
+    "entities": [
+      [
+        13,
+        21,
+        "FOLIO"
+      ],
+      [
+        36,
+        43,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E08_0",
+    "family": "N08",
+    "split": "validation",
+    "text": "La aplicación NubeTec falla; el folio es INC-1009.",
+    "entities": [
+      [
+        14,
+        21,
+        "PRODUCTO"
+      ],
+      [
+        41,
+        49,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E08_1",
+    "family": "N08",
+    "split": "validation",
+    "text": "Favor de revisar INC-1009: no abre NubeTec.",
+    "entities": [
+      [
+        17,
+        25,
+        "FOLIO"
+      ],
+      [
+        35,
+        42,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E08_2",
+    "family": "N08",
+    "split": "validation",
+    "text": "Con NubeTec no puedo guardar. Seguimiento: INC-1009.",
+    "entities": [
+      [
+        4,
+        11,
+        "PRODUCTO"
+      ],
+      [
+        43,
+        51,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E08_3",
+    "family": "N08",
+    "split": "validation",
+    "text": "Mi solicitud INC-1009 corresponde a NubeTec.",
+    "entities": [
+      [
+        13,
+        21,
+        "FOLIO"
+      ],
+      [
+        36,
+        43,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E09_0",
+    "family": "N09",
+    "split": "validation",
+    "text": "La aplicación AulaPro falla; el folio es INC-1010.",
+    "entities": [
+      [
+        14,
+        21,
+        "PRODUCTO"
+      ],
+      [
+        41,
+        49,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E09_1",
+    "family": "N09",
+    "split": "validation",
+    "text": "Favor de revisar INC-1010: no abre AulaPro.",
+    "entities": [
+      [
+        17,
+        25,
+        "FOLIO"
+      ],
+      [
+        35,
+        42,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E09_2",
+    "family": "N09",
+    "split": "validation",
+    "text": "Con AulaPro no puedo guardar. Seguimiento: INC-1010.",
+    "entities": [
+      [
+        4,
+        11,
+        "PRODUCTO"
+      ],
+      [
+        43,
+        51,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E09_3",
+    "family": "N09",
+    "split": "validation",
+    "text": "Mi solicitud INC-1010 corresponde a AulaPro.",
+    "entities": [
+      [
+        13,
+        21,
+        "FOLIO"
+      ],
+      [
+        36,
+        43,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E10_0",
+    "family": "N10",
+    "split": "test",
+    "text": "La aplicación MesaApp falla; el folio es INC-1011.",
+    "entities": [
+      [
+        14,
+        21,
+        "PRODUCTO"
+      ],
+      [
+        41,
+        49,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E10_1",
+    "family": "N10",
+    "split": "test",
+    "text": "Favor de revisar INC-1011: no abre MesaApp.",
+    "entities": [
+      [
+        17,
+        25,
+        "FOLIO"
+      ],
+      [
+        35,
+        42,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E10_2",
+    "family": "N10",
+    "split": "test",
+    "text": "Con MesaApp no puedo guardar. Seguimiento: INC-1011.",
+    "entities": [
+      [
+        4,
+        11,
+        "PRODUCTO"
+      ],
+      [
+        43,
+        51,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E10_3",
+    "family": "N10",
+    "split": "test",
+    "text": "Mi solicitud INC-1011 corresponde a MesaApp.",
+    "entities": [
+      [
+        13,
+        21,
+        "FOLIO"
+      ],
+      [
+        36,
+        43,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E11_0",
+    "family": "N11",
+    "split": "test",
+    "text": "La aplicación NubeTec falla; el folio es INC-1012.",
+    "entities": [
+      [
+        14,
+        21,
+        "PRODUCTO"
+      ],
+      [
+        41,
+        49,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E11_1",
+    "family": "N11",
+    "split": "test",
+    "text": "Favor de revisar INC-1012: no abre NubeTec.",
+    "entities": [
+      [
+        17,
+        25,
+        "FOLIO"
+      ],
+      [
+        35,
+        42,
+        "PRODUCTO"
+      ]
+    ]
+  },
+  {
+    "id": "E11_2",
+    "family": "N11",
+    "split": "test",
+    "text": "Con NubeTec no puedo guardar. Seguimiento: INC-1012.",
+    "entities": [
+      [
+        4,
+        11,
+        "PRODUCTO"
+      ],
+      [
+        43,
+        51,
+        "FOLIO"
+      ]
+    ]
+  },
+  {
+    "id": "E11_3",
+    "family": "N11",
+    "split": "test",
+    "text": "Mi solicitud INC-1012 corresponde a NubeTec.",
+    "entities": [
+      [
+        13,
+        21,
+        "FOLIO"
+      ],
+      [
+        36,
+        43,
+        "PRODUCTO"
+      ]
+    ]
+  }
+]
