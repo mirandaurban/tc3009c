@@ -1,0 +1,39 @@
+{
+  "fuente": "corpus_actividad_02_v2.csv",
+  "versiones": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "scikit-learn": "1.9.0",
+    "skops": "0.11.0",
+    "matplotlib": "3.11.1",
+    "python": "3.12.10"
+  },
+  "semilla": 42,
+  "configuracion": {
+    "tfidf": {
+      "ngram_range": [
+        1,
+        1
+      ],
+      "lowercase": true,
+      "strip_accents": null,
+      "stop_words": null
+    },
+    "logistic_regression": {
+      "C": 1.0,
+      "max_iter": 1000,
+      "solver": "lbfgs",
+      "random_state": 42
+    },
+    "multinomial_nb": {
+      "alpha": 1.0
+    }
+  },
+  "orden_categorias": [
+    "acceso",
+    "conectividad",
+    "pagos",
+    "software"
+  ],
+  "modelo_elegido": "logistic_regression"
+}
