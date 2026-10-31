@@ -1,0 +1,132 @@
+[
+  {
+    "id": "reservada-01",
+    "query": "¿Cuál es el máximo de libros por persona?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "reservada-02",
+    "query": "¿Qué credencial debo presentar para solicitar el préstamo?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "reservada-03",
+    "query": "¿Durante cuántos días naturales se presta un libro?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "reservada-04",
+    "query": "¿Se permite la renovación cuando hay otra reserva?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "reservada-05",
+    "query": "¿A qué hora cierra Aurora entre semana?",
+    "relevant": [
+      "horarios.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "reservada-06",
+    "query": "¿El horario de atención del sábado termina a las trece horas?",
+    "relevant": [
+      "horarios.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "reservada-07",
+    "query": "¿En qué lugar se realiza la devolución de libros?",
+    "relevant": [
+      "horarios.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "reservada-08",
+    "query": "¿Qué ocurre los domingos en la biblioteca?",
+    "relevant": [
+      "horarios.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "reservada-09",
+    "query": "¿Por cuántas horas se reservan las salas de estudio?",
+    "relevant": [
+      "salas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "reservada-10",
+    "query": "¿Se permiten grupos de seis personas en las salas?",
+    "relevant": [
+      "salas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "reservada-11",
+    "query": "¿Se cancela la reserva tras quince minutos de retraso?",
+    "relevant": [
+      "salas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "reservada-12",
+    "query": "¿Qué folio se proporciona para reservar?",
+    "relevant": [
+      "salas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "reservada-13",
+    "query": "¿Cuántos créditos ficticios por día cuesta el retraso de un libro?",
+    "relevant": [
+      "multas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "reservada-14",
+    "query": "¿Los créditos de las multas representan dinero real?",
+    "relevant": [
+      "multas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "reservada-15",
+    "query": "¿Se consulta el saldo de multas en el mostrador de Aurora?",
+    "relevant": [
+      "multas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "reservada-16",
+    "query": "¿Qué ingredientes lleva una ensalada de mango?",
+    "relevant": []
+  },
+  {
+    "id": "reservada-17",
+    "query": "¿Cuál es la distancia entre Venus y el Sol?",
+    "relevant": []
+  },
+  {
+    "id": "reservada-18",
+    "query": "¿Qué documentos exige la biblioteca para una beca?",
+    "relevant": []
+  },
+  {
+    "id": "reservada-19",
+    "query": "¿Cuánto cuesta el seguro de los libros prestados?",
+    "relevant": []
+  },
+  {
+    "id": "reservada-20",
+    "query": "¿Cuál es el horario de asesoría jurídica de Aurora?",
+    "relevant": []
+  }
+]

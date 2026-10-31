@@ -1,0 +1,1 @@
+La biblioteca ficticia Aurora presta hasta tres libros por persona. El préstamo dura siete días naturales. Para solicitar un préstamo se presenta la credencial universitaria vigente. La renovación se permite una sola vez si no hay otra reserva.

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "test-prestamo-8",
+    "text": "necesito un libro durante una semana",
+    "label": "prestamo"
+  },
+  {
+    "id": "test-prestamo-9",
+    "text": "dónde tramito el préstamo de libros",
+    "label": "prestamo"
+  },
+  {
+    "id": "test-horario-8",
+    "text": "hay servicio los domingos",
+    "label": "horario"
+  },
+  {
+    "id": "test-horario-9",
+    "text": "cuándo puedo acudir el viernes",
+    "label": "horario"
+  },
+  {
+    "id": "test-sala-8",
+    "text": "cuántos compañeros pueden usar el salón",
+    "label": "sala"
+  },
+  {
+    "id": "test-sala-9",
+    "text": "puedo apartar un salón para seis",
+    "label": "sala"
+  },
+  {
+    "id": "test-multa-8",
+    "text": "qué sanción tiene un libro vencido",
+    "label": "multa"
+  },
+  {
+    "id": "test-multa-9",
+    "text": "necesito saber cuánto cobran por demora",
+    "label": "multa"
+  },
+  {
+    "id": "test-fuera_de_alcance-8",
+    "text": "cuánto cuesta viajar a Marte",
+    "label": "fuera_de_alcance"
+  },
+  {
+    "id": "test-fuera_de_alcance-9",
+    "text": "cuéntame un chiste de astronautas",
+    "label": "fuera_de_alcance"
+  }
+]

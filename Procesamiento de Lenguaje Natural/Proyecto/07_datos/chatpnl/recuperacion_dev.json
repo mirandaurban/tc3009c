@@ -1,0 +1,392 @@
+[
+  {
+    "id": "dev-1",
+    "query": "cuántos libros puedo pedir",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-2",
+    "query": "cuánto dura el préstamo",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-3",
+    "query": "cuándo abre los sábados",
+    "relevant": [
+      "horarios.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-4",
+    "query": "abren los domingos",
+    "relevant": [
+      "horarios.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-5",
+    "query": "cuánto dura la reserva de sala",
+    "relevant": [
+      "salas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-6",
+    "query": "cuántos créditos de multa",
+    "relevant": [
+      "multas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-7",
+    "query": "precio del petróleo",
+    "relevant": []
+  },
+  {
+    "id": "dev-8",
+    "query": "temperatura en Marte",
+    "relevant": []
+  },
+  {
+    "id": "dev-9",
+    "query": "¿Qué horario tienen los sábados?",
+    "relevant": [
+      "horarios.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-10",
+    "query": "¿La biblioteca permanece cerrada los domingos?",
+    "relevant": [
+      "horarios.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-11",
+    "query": "¿Cuál es el precio de la credencial universitaria?",
+    "relevant": []
+  },
+  {
+    "id": "dev-12",
+    "query": "¿Cuántas personas se permiten en las salas?",
+    "relevant": [
+      "salas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-13",
+    "query": "¿Qué pasa con la reserva después de quince minutos de retraso?",
+    "relevant": [
+      "salas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-14",
+    "query": "¿El préstamo dura siete días naturales?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-15",
+    "query": "¿La renovación se permite una sola vez?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-16",
+    "query": "¿Dónde consultar el saldo de multas?",
+    "relevant": [
+      "multas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-17",
+    "query": "¿Se reciben pagos en línea?",
+    "relevant": [
+      "multas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-18",
+    "query": "¿Cuántos libros presta la biblioteca?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-19",
+    "query": "¿Qué vacunas exige la biblioteca?",
+    "relevant": []
+  },
+  {
+    "id": "dev-20",
+    "query": "¿Qué descuento tienen las multas por desempleo?",
+    "relevant": []
+  },
+  {
+    "id": "dev-21",
+    "query": "¿Cuál es el plazo de préstamo?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-22",
+    "query": "¿Qué duración tiene la reserva de una sala?",
+    "relevant": [
+      "salas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-23",
+    "query": "¿Se permite renovar sin otra reserva?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-24",
+    "query": "¿Se permite renovar cuando no hay otra reserva?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-25",
+    "query": "¿Hay que proporcionar la credencial para solicitar un préstamo?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-26",
+    "query": "¿Qué folio hay que proporcionar en el mostrador para reservar?",
+    "relevant": [
+      "salas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-27",
+    "query": "¿Cuántos minutos de retraso cancelan la reserva?",
+    "relevant": [
+      "salas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-28",
+    "query": "¿Qué horario tienen los domingos en Aurora?",
+    "relevant": [
+      "horarios.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-29",
+    "query": "¿La devolución se realiza durante el horario de atención?",
+    "relevant": [
+      "horarios.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-30",
+    "query": "¿Cuántas horas se puede reservar una sala de estudio?",
+    "relevant": [
+      "salas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-31",
+    "query": "¿Se permiten grupos de dos personas?",
+    "relevant": [
+      "salas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-32",
+    "query": "¿Se reciben pagos de multas en línea?",
+    "relevant": [
+      "multas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-33",
+    "query": "¿Los créditos ficticios no representan dinero real?",
+    "relevant": [
+      "multas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-34",
+    "query": "¿Qué saldo de multas se consulta en el mostrador?",
+    "relevant": [
+      "multas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-35",
+    "query": "¿Se solicita una credencial universitaria vigente para el préstamo?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-36",
+    "query": "¿Qué plazo tiene la devolución de un automóvil?",
+    "relevant": []
+  },
+  {
+    "id": "dev-37",
+    "query": "¿Se proporciona un seguro médico con los libros?",
+    "relevant": []
+  },
+  {
+    "id": "dev-38",
+    "query": "¿Se puede reservar una sala sin pasaporte?",
+    "relevant": []
+  },
+  {
+    "id": "dev-39",
+    "query": "¿Cuál es el teléfono del director de Aurora?",
+    "relevant": []
+  },
+  {
+    "id": "dev-40",
+    "query": "¿La multa puede abonarse con criptomonedas?",
+    "relevant": []
+  },
+  {
+    "id": "dev-41",
+    "query": "¿Qué requisito se solicita para el préstamo?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-42",
+    "query": "¿Qué credencial es necesario presentar al pedir libros?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-43",
+    "query": "¿Es obligatorio proporcionar el folio para reservar?",
+    "relevant": [
+      "salas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-44",
+    "query": "¿Qué dato debe presentarse en el mostrador para reservar?",
+    "relevant": [
+      "salas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-45",
+    "query": "¿Cuál es la cantidad máxima de libros por persona?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-46",
+    "query": "¿Qué límite de libros se permite en el préstamo?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-47",
+    "query": "¿Hay atención los sábados?",
+    "relevant": [
+      "horarios.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-48",
+    "query": "¿Hay servicio de devolución en el mostrador?",
+    "relevant": [
+      "horarios.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-49",
+    "query": "¿Puede renovarse el préstamo sin otra reserva?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-50",
+    "query": "¿Es posible renovar cuando hay una reserva adicional?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-51",
+    "query": "¿Hay que presentar credencial vigente para solicitar libros?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-52",
+    "query": "¿Son reales los créditos ficticios de multa?",
+    "relevant": [
+      "multas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-53",
+    "query": "¿Cuál es el plazo de una reserva de sala?",
+    "relevant": [
+      "salas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-54",
+    "query": "¿Se prestan tres libros?",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-55",
+    "query": "¿El horario del sábado es de nueve a trece?",
+    "relevant": [
+      "horarios.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "dev-56",
+    "query": "¿Qué requisito de pasaporte exige el préstamo?",
+    "relevant": []
+  },
+  {
+    "id": "dev-57",
+    "query": "¿Cuál es la cantidad máxima de equipaje para el avión?",
+    "relevant": []
+  },
+  {
+    "id": "dev-58",
+    "query": "¿Cuál es el identificador de la cuenta bancaria de Aurora?",
+    "relevant": []
+  },
+  {
+    "id": "dev-59",
+    "query": "¿Hay servicio de urgencias médicas en las salas?",
+    "relevant": []
+  },
+  {
+    "id": "dev-60",
+    "query": "¿Es obligatorio declarar impuestos por las multas?",
+    "relevant": []
+  }
+]

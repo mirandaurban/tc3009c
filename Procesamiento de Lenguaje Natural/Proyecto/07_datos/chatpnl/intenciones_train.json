@@ -1,0 +1,152 @@
+[
+  {
+    "id": "train-prestamo-0",
+    "text": "quiero pedir un libro",
+    "label": "prestamo"
+  },
+  {
+    "id": "train-prestamo-1",
+    "text": "cómo consigo libros prestados",
+    "label": "prestamo"
+  },
+  {
+    "id": "train-prestamo-2",
+    "text": "necesito renovar mi préstamo",
+    "label": "prestamo"
+  },
+  {
+    "id": "train-prestamo-3",
+    "text": "qué credencial llevo para préstamo",
+    "label": "prestamo"
+  },
+  {
+    "id": "train-prestamo-4",
+    "text": "cuántos libros puedo sacar",
+    "label": "prestamo"
+  },
+  {
+    "id": "train-prestamo-5",
+    "text": "cuánto dura el préstamo",
+    "label": "prestamo"
+  },
+  {
+    "id": "train-horario-0",
+    "text": "a qué hora abren",
+    "label": "horario"
+  },
+  {
+    "id": "train-horario-1",
+    "text": "cuándo cierra la biblioteca",
+    "label": "horario"
+  },
+  {
+    "id": "train-horario-2",
+    "text": "atienden los sábados",
+    "label": "horario"
+  },
+  {
+    "id": "train-horario-3",
+    "text": "qué horario tienen el lunes",
+    "label": "horario"
+  },
+  {
+    "id": "train-horario-4",
+    "text": "abren el domingo",
+    "label": "horario"
+  },
+  {
+    "id": "train-horario-5",
+    "text": "hasta qué hora puedo entrar",
+    "label": "horario"
+  },
+  {
+    "id": "train-sala-0",
+    "text": "necesito reservar una sala",
+    "label": "sala"
+  },
+  {
+    "id": "train-sala-1",
+    "text": "cuántas personas caben en la sala",
+    "label": "sala"
+  },
+  {
+    "id": "train-sala-2",
+    "text": "cómo aparto espacio de estudio",
+    "label": "sala"
+  },
+  {
+    "id": "train-sala-3",
+    "text": "puedo cancelar mi reserva de sala",
+    "label": "sala"
+  },
+  {
+    "id": "train-sala-4",
+    "text": "cuánto tiempo dura la reserva",
+    "label": "sala"
+  },
+  {
+    "id": "train-sala-5",
+    "text": "qué pasa si llego tarde a mi sala",
+    "label": "sala"
+  },
+  {
+    "id": "train-multa-0",
+    "text": "cuánto debo de multa",
+    "label": "multa"
+  },
+  {
+    "id": "train-multa-1",
+    "text": "qué ocurre por devolver tarde",
+    "label": "multa"
+  },
+  {
+    "id": "train-multa-2",
+    "text": "dónde consulto mi saldo de multas",
+    "label": "multa"
+  },
+  {
+    "id": "train-multa-3",
+    "text": "cuántos créditos cuesta un retraso",
+    "label": "multa"
+  },
+  {
+    "id": "train-multa-4",
+    "text": "hay multa por libro atrasado",
+    "label": "multa"
+  },
+  {
+    "id": "train-multa-5",
+    "text": "reciben pagos de multas en línea",
+    "label": "multa"
+  },
+  {
+    "id": "train-fuera_de_alcance-0",
+    "text": "cómo estará el clima mañana",
+    "label": "fuera_de_alcance"
+  },
+  {
+    "id": "train-fuera_de_alcance-1",
+    "text": "dime el precio del petróleo",
+    "label": "fuera_de_alcance"
+  },
+  {
+    "id": "train-fuera_de_alcance-2",
+    "text": "necesito una receta de sopa",
+    "label": "fuera_de_alcance"
+  },
+  {
+    "id": "train-fuera_de_alcance-3",
+    "text": "cuál es la capital de Japón",
+    "label": "fuera_de_alcance"
+  },
+  {
+    "id": "train-fuera_de_alcance-4",
+    "text": "resuelve una ecuación diferencial",
+    "label": "fuera_de_alcance"
+  },
+  {
+    "id": "train-fuera_de_alcance-5",
+    "text": "quiero comprar boletos de avión",
+    "label": "fuera_de_alcance"
+  }
+]

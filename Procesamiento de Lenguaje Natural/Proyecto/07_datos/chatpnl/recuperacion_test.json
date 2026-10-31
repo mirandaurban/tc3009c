@@ -1,0 +1,54 @@
+[
+  {
+    "id": "test-1",
+    "query": "cómo renovar un préstamo",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "test-2",
+    "query": "credencial para pedir libros",
+    "relevant": [
+      "prestamos.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "test-3",
+    "query": "hora de cierre los viernes",
+    "relevant": [
+      "horarios.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "test-4",
+    "query": "devolución de libros en domingo",
+    "relevant": [
+      "horarios.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "test-5",
+    "query": "capacidad de las salas de estudio",
+    "relevant": [
+      "salas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "test-6",
+    "query": "pago de multas en línea",
+    "relevant": [
+      "multas.txt:p1:w0"
+    ]
+  },
+  {
+    "id": "test-7",
+    "query": "receta de tortilla",
+    "relevant": []
+  },
+  {
+    "id": "test-8",
+    "query": "órbita de Saturno",
+    "relevant": []
+  }
+]
