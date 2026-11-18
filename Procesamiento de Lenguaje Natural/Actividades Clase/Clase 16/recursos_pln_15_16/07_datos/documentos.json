@@ -1,0 +1,72 @@
+[
+  {
+    "id": "D01",
+    "title": "Recuperación de acceso",
+    "text": "Para restablecer la contraseña, usa la opción Recuperar acceso del portal. El enlace de recuperación vence en 30 minutos. Nunca compartas tu contraseña ni el código de verificación.",
+    "version": "1.0",
+    "origin": "sintético original"
+  },
+  {
+    "id": "D02",
+    "title": "Verificación y bloqueo",
+    "text": "Después de cinco intentos fallidos, la cuenta se bloquea durante 15 minutos. El soporte nunca solicita códigos de verificación. Si cambiaste de celular, solicita restablecer el segundo factor mediante un folio.",
+    "version": "1.0",
+    "origin": "sintético original"
+  },
+  {
+    "id": "D03",
+    "title": "Facturas",
+    "text": "La factura se genera dentro de 3 días hábiles después de confirmar el pago. Para corregir el RFC, abre un folio de facturación antes del cierre del mes. No adjuntes números completos de tarjeta.",
+    "version": "1.0",
+    "origin": "sintético original"
+  },
+  {
+    "id": "D04",
+    "title": "Reembolsos",
+    "text": "Un reembolso autorizado tarda entre 5 y 10 días hábiles en reflejarse en la tarjeta. Los cargos duplicados se revisan con el identificador del movimiento y el folio de soporte.",
+    "version": "1.0",
+    "origin": "sintético original"
+  },
+  {
+    "id": "D05",
+    "title": "Conexión inalámbrica",
+    "text": "Si la red inalámbrica falla, desactiva y activa wifi una vez. Comprueba la red Aula-Ficticia. Si persiste la falla, registra la hora y el mensaje de error en un folio; no publiques claves de red.",
+    "version": "1.0",
+    "origin": "sintético original"
+  },
+  {
+    "id": "D06",
+    "title": "VPN",
+    "text": "La VPN requiere una cuenta activa y el segundo factor. Antes de reportar baja velocidad, compara la conexión con y sin VPN y registra ambas mediciones. La VPN de soporte no funciona en la red de invitados.",
+    "version": "1.0",
+    "origin": "sintético original"
+  },
+  {
+    "id": "D07",
+    "title": "Actualizaciones",
+    "text": "Antes de instalar una actualización, guarda tus archivos y verifica que existan 2 GB de espacio libre. Descarga el instalador del catálogo institucional ficticio. No ejecutes adjuntos desconocidos.",
+    "version": "1.0",
+    "origin": "sintético original"
+  },
+  {
+    "id": "D08",
+    "title": "Archivos y licencias",
+    "text": "Si una aplicación no guarda un documento, prueba una copia local con un nombre distinto. Las licencias de práctica duran 90 días. Los archivos borrados se conservan en la papelera durante 7 días.",
+    "version": "1.0",
+    "origin": "sintético original"
+  },
+  {
+    "id": "D09",
+    "title": "Privacidad de soporte",
+    "text": "Los registros de soporte se conservan durante 30 días. Elimina nombres, correos, teléfonos y credenciales antes de usar una solicitud en docencia. Los ejemplos del curso son ficticios.",
+    "version": "1.0",
+    "origin": "sintético original"
+  },
+  {
+    "id": "D10",
+    "title": "Horario y escalamiento",
+    "text": "El soporte ficticio atiende de lunes a viernes de 9 a 17 horas. Para escalar una solicitud, registra el folio, el impacto y las pruebas ya realizadas. Ningún procedimiento autoriza el envío de secretos.",
+    "version": "1.0",
+    "origin": "sintético original"
+  }
+]

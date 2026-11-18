@@ -1,0 +1,122 @@
+[
+  {
+    "id": "Q01",
+    "split": "validation",
+    "question": "¿Cuánto dura el enlace de recuperación de contraseña?",
+    "relevant": [
+      "D01"
+    ],
+    "answer": "30 minutos"
+  },
+  {
+    "id": "Q02",
+    "split": "validation",
+    "question": "¿Cuánto tarda en emitirse la factura después del pago?",
+    "relevant": [
+      "D03"
+    ],
+    "answer": "3 días hábiles"
+  },
+  {
+    "id": "Q03",
+    "split": "validation",
+    "question": "¿Cuánto tarda el reembolso a la tarjeta?",
+    "relevant": [
+      "D04"
+    ],
+    "answer": "entre 5 y 10 días hábiles"
+  },
+  {
+    "id": "Q04",
+    "split": "validation",
+    "question": "¿Cuánto espacio libre necesito antes de actualizar?",
+    "relevant": [
+      "D07"
+    ],
+    "answer": "2 GB"
+  },
+  {
+    "id": "Q05",
+    "split": "validation",
+    "question": "¿Puedo usar la VPN en la red de invitados?",
+    "relevant": [
+      "D06"
+    ],
+    "answer": "no funciona en la red de invitados"
+  },
+  {
+    "id": "Q06",
+    "split": "validation",
+    "question": "¿Cuál es el precio de la licencia premium?",
+    "relevant": [],
+    "answer": ""
+  },
+  {
+    "id": "Q07",
+    "split": "test",
+    "question": "¿Durante cuánto tiempo se bloquea la cuenta?",
+    "relevant": [
+      "D02"
+    ],
+    "answer": "15 minutos"
+  },
+  {
+    "id": "Q08",
+    "split": "test",
+    "question": "¿Qué vigencia tienen las licencias de práctica?",
+    "relevant": [
+      "D08"
+    ],
+    "answer": "90 días"
+  },
+  {
+    "id": "Q09",
+    "split": "test",
+    "question": "¿Cuánto tiempo se conservan los registros de soporte?",
+    "relevant": [
+      "D09"
+    ],
+    "answer": "30 días"
+  },
+  {
+    "id": "Q10",
+    "split": "test",
+    "question": "¿A qué hora cierra el soporte ficticio?",
+    "relevant": [
+      "D10"
+    ],
+    "answer": "17 horas"
+  },
+  {
+    "id": "Q11",
+    "split": "test",
+    "question": "¿Cuál es el nombre de la red inalámbrica?",
+    "relevant": [
+      "D05"
+    ],
+    "answer": "Aula-Ficticia"
+  },
+  {
+    "id": "Q12",
+    "split": "test",
+    "question": "¿Quién ganó el torneo de futbol del domingo?",
+    "relevant": [],
+    "answer": ""
+  },
+  {
+    "id": "Q13",
+    "split": "test",
+    "question": "¿Cuál es mi saldo bancario actual?",
+    "relevant": [],
+    "answer": ""
+  },
+  {
+    "id": "Q14",
+    "split": "test",
+    "question": "¿Cuántos días se conserva un archivo en la papelera?",
+    "relevant": [
+      "D08"
+    ],
+    "answer": "7 días"
+  }
+]
